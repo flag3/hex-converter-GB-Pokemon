@@ -21,13 +21,13 @@ function App() {
 
   const stringToHex = (str: string) => {
     return str
-      .split(/(?=[\r\n])|\B/u)
-      .map((char) => stringToHexMap[char] || "")
+      .split("")
+      .map((char) => specialStringToHexMap[char] || stringToHexMap[char] || "")
       .join(" ");
   };
 
   const hexToString = (hex: string) => {
-    const hexArray = hex.match(/.{1,2}/g) || []; // Split hex into chunks of two characters
+    const hexArray = hex.match(/.{1,2}/g) || [];
     return hexArray.map((hex) => hexToStringMap[hex] || "").join("");
   };
 
@@ -312,5 +312,14 @@ const stringToHexMap: { [key: string]: string } = {};
 for (const key in hexToStringMap) {
   stringToHexMap[hexToStringMap[key]] = key;
 }
+
+const specialStringToHexMap: { [key: string]: string } = {
+  ど: "34",
+  ヘ: "CD",
+  ベ: "3D",
+  ペ: "47",
+  リ: "D8",
+  "\n": "4F",
+};
 
 export default App;
