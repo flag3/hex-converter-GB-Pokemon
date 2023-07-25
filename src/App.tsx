@@ -1,22 +1,34 @@
 import { useState, ChangeEvent } from "react";
+import { hexToZ80InstructionMap } from "./hexToZ80InstructionMap";
+import { hexToCBPrefixedZ80InstructionMap } from "./hexToCBPrefixedZ80InstructionMap";
+import {
+  stringToHexMap,
+  hexToStringMap,
+  specialStringToHexMap,
+} from "./stringAndHexMaps";
 import "./App.css";
 
 function App() {
-  const [hex, setHex] = useState("");
   const [string, setString] = useState("");
+  const [hex, setHex] = useState("");
+  const [program, setProgram] = useState("");
 
   const handleStringChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const str = event.target.value;
-    setString(str);
-    const hexValue = stringToHex(event.target.value);
-    setHex(hexValue);
+    const newString = event.target.value;
+    const newHex = stringToHex(newString);
+    const newProgram = hexToZ80Program(newHex.replace(/\s/g, ""));
+    setString(newString);
+    setHex(newHex);
+    setProgram(newProgram);
   };
 
   const handleHexChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const hex = event.target.value;
-    setHex(hex);
-    const hexValue = hexToString(event.target.value.replace(/\s/g, ""));
-    setString(hexValue);
+    const newHex = event.target.value.replace(/[^0-9A-Fa-f\s]/g, "");
+    const newString = hexToString(newHex.replace(/\s/g, "").toUpperCase());
+    const newProgram = hexToZ80Program(newHex.replace(/\s/g, "").toUpperCase());
+    setHex(newHex);
+    setString(newString);
+    setProgram(newProgram);
   };
 
   const stringToHex = (str: string) => {
@@ -31,295 +43,70 @@ function App() {
     return hexArray.map((hex) => hexToStringMap[hex] || "").join("");
   };
 
+  const hexToZ80Program = (hex: string) => {
+    const hexArray = hex.match(/.{1,2}/g) || [];
+    let program = "";
+    for (let i = 0; i < hexArray.length; i++) {
+      let instruction: string;
+      if (hexArray[i] === "CB") {
+        instruction =
+          hexToCBPrefixedZ80InstructionMap[hexArray[++i]] || "prefix cb";
+      } else {
+        instruction = hexToZ80InstructionMap[hexArray[i]] || "";
+      }
+
+      const operandCount = (instruction.match(/\*/g) || []).length;
+      const operands = hexArray.slice(i + 1, i + 1 + operandCount);
+
+      if (operandCount === 2) {
+        instruction = instruction.replace(
+          "**",
+          (operands[1]
+            ? operands[1].length === 1
+              ? operands[1] + "*"
+              : operands[1]
+            : "**") +
+            (operands[0]
+              ? operands[0].length === 1
+                ? operands[0] + "*"
+                : operands[0]
+              : "**")
+        );
+      } else if (operandCount === 1) {
+        instruction = instruction.replace(
+          "*",
+          operands[0]
+            ? operands[0].length === 1
+              ? operands[0] + "*"
+              : operands[0]
+            : "**"
+        );
+      }
+      program += instruction + "\n";
+      i += operandCount;
+    }
+    return program;
+  };
+
   return (
     <div className="App">
-      <h2>Pokemon String to Hex and Hex to String Converter</h2>
+      <h2>Pokemon Z80 Hex and String Converter</h2>
 
       <label>文字列</label>
       <textarea
         value={string}
         onChange={handleStringChange}
-        rows={10}
-        cols={50}
+        rows={20}
+        cols={40}
       />
 
       <label>16進数</label>
-      <textarea value={hex} onChange={handleHexChange} rows={10} cols={50} />
+      <textarea value={hex} onChange={handleHexChange} rows={20} cols={40} />
+
+      <label>Z80</label>
+      <textarea value={program} readOnly rows={20} cols={40} />
     </div>
   );
 }
-
-const hexToStringMap: { [key: string]: string } = {
-  "00": "-",
-  "01": "イ゛",
-  "02": "ウ゛",
-  "03": "エ゛",
-  "04": "オ゛",
-  "05": "ガ",
-  "06": "ギ",
-  "07": "グ",
-  "08": "ゲ",
-  "09": "ゴ",
-  "0A": "ザ",
-  "0B": "ジ",
-  "0C": "ズ",
-  "0D": "ゼ",
-  "0E": "ゾ",
-  "0F": "ダ",
-  "10": "ヂ",
-  "11": "ヅ",
-  "12": "デ",
-  "13": "ド",
-  "14": "ナ゛",
-  "15": "ニ゛",
-  "16": "ヌ゛",
-  "17": "ネ゛",
-  "18": "ノ゛",
-  "19": "バ",
-  "1A": "ビ",
-  "1B": "ブ",
-  "1C": "ボ",
-  "1D": "マ゛",
-  "1E": "ミ゛",
-  "1F": "ム゛",
-  "20": "ィ゛",
-  "21": "あ゛",
-  "22": "い゛",
-  "23": "?",
-  "24": "え゛",
-  "25": "お゛",
-  "26": "が",
-  "27": "ぎ",
-  "28": "ぐ",
-  "29": "げ",
-  "2A": "ご",
-  "2B": "ざ",
-  "2C": "じ",
-  "2D": "ず",
-  "2E": "ぜ",
-  "2F": "ぞ",
-  "30": "だ",
-  "31": "ぢ",
-  "32": "づ",
-  "33": "で",
-  "34": "ど",
-  "35": "な゛",
-  "36": "に゛",
-  "37": "ぬ゛",
-  "38": "ね゛",
-  "39": "の゛",
-  "3A": "ば",
-  "3B": "び",
-  "3C": "ぶ",
-  "3D": "べ",
-  "3E": "ぼ",
-  "3F": "ま゛",
-  "40": "パ",
-  "41": "ピ",
-  "42": "プ",
-  "43": "ポ",
-  "44": "ぱ",
-  "45": "ぴ",
-  "46": "ぷ",
-  "47": "ぺ",
-  "48": "ぽ",
-  "49": "ま゜",
-  "4A": "み゜",
-  "4B": "文字送り",
-  "4C": "自動送り",
-  "4D": "も゜",
-  "4E": "1行改行",
-  "4F": "\n",
-  "50": "終",
-  "51": "文字送り",
-  "52": "主人公の名前",
-  "53": "ライバル名前",
-  "54": "0",
-  "55": "文字送り",
-  "56": "……",
-  "57": "無効",
-  "58": "改ページ",
-  "59": "ポケモン1",
-  "5A": "ポケモン2",
-  "5B": "パソコン",
-  "5C": "わざマシン",
-  "5D": "トレーナー",
-  "5E": "ロケットだん",
-  "5F": "、、゜",
-  "60": "A",
-  "61": "B",
-  "62": "] ：| ,",
-  "63": "HPゲージ0/8",
-  "64": "HPゲージ1/8",
-  "65": "HPゲージ2/8",
-  "66": "HPゲージ3/8",
-  "67": "HPゲージ4/8",
-  "68": "HPゲージ5/8",
-  "69": "HPゲージ6/8",
-  "6A": "HPゲージ7/8",
-  "6B": "HPゲージ8/8",
-  "6C": ",",
-  "6D": ",||",
-  "6E": ":L",
-  "6F": "左とんがり",
-  "70": "ど",
-  "71": "H1",
-  "72": "『",
-  "73": "ID",
-  "74": "No",
-  "75": "…",
-  "76": "━",
-  "77": "￣",
-  "78": "右とんがり",
-  "79": "┏",
-  "7A": "＝",
-  "7B": "┓",
-  "7C": "||",
-  "7D": "┗",
-  "7E": "┛",
-  "7F": "　",
-  "80": "ア",
-  "81": "イ",
-  "82": "ウ",
-  "83": "エ",
-  "84": "オ",
-  "85": "カ",
-  "86": "キ",
-  "87": "ク",
-  "88": "ケ",
-  "89": "コ",
-  "8A": "サ",
-  "8B": "シ",
-  "8C": "ス",
-  "8D": "セ",
-  "8E": "ソ",
-  "8F": "タ",
-  "90": "チ",
-  "91": "ツ",
-  "92": "テ",
-  "93": "ト",
-  "94": "ナ",
-  "95": "ニ",
-  "96": "ヌ",
-  "97": "ネ",
-  "98": "ノ",
-  "99": "ハ",
-  "9A": "ヒ",
-  "9B": "フ",
-  "9C": "ホ",
-  "9D": "マ",
-  "9E": "ミ",
-  "9F": "ム",
-  A0: "メ",
-  A1: "モ",
-  A2: "ヤ",
-  A3: "ユ",
-  A4: "ヨ",
-  A5: "ラ",
-  A6: "ル",
-  A7: "レ",
-  A8: "ロ",
-  A9: "ワ",
-  AA: "ヲ",
-  AB: "ン",
-  AC: "ッ",
-  AD: "ャ",
-  AE: "ュ",
-  AF: "ョ",
-  B0: "ィ",
-  B1: "あ",
-  B2: "い",
-  B3: "う",
-  B4: "え",
-  B5: "お",
-  B6: "か",
-  B7: "き",
-  B8: "く",
-  B9: "け",
-  BA: "こ",
-  BB: "さ",
-  BC: "し",
-  BD: "す",
-  BE: "せ",
-  BF: "そ",
-  C0: "た",
-  C1: "ち",
-  C2: "つ",
-  C3: "て",
-  C4: "と",
-  C5: "な",
-  C6: "に",
-  C7: "ぬ",
-  C8: "ね",
-  C9: "の",
-  CA: "は",
-  CB: "ひ",
-  CC: "ふ",
-  CD: "へ",
-  CE: "ほ",
-  CF: "ま",
-  D0: "み",
-  D1: "む",
-  D2: "め",
-  D3: "も",
-  D4: "や",
-  D5: "ゆ",
-  D6: "よ",
-  D7: "ら",
-  D8: "り",
-  D9: "る",
-  DA: "れ",
-  DB: "ろ",
-  DC: "わ",
-  DD: "を",
-  DE: "ん",
-  DF: "っ",
-  E0: "ゃ",
-  E1: "ゅ",
-  E2: "ょ",
-  E3: "ー",
-  E4: "ﾟ",
-  E5: "゛",
-  E6: "？",
-  E7: "！",
-  E8: "。",
-  E9: "ァ",
-  EA: "ゥ",
-  EB: "ェ",
-  EC: "▷",
-  ED: "▶",
-  EE: "▼",
-  EF: "♂",
-  F0: "円",
-  F1: "×",
-  F2: "．",
-  F3: "／",
-  F4: "ォ",
-  F5: "♀",
-  F6: "0",
-  F7: "1",
-  F8: "2",
-  F9: "3",
-  FA: "4",
-  FB: "5",
-  FC: "6",
-  FD: "7",
-  FE: "8",
-  FF: "9",
-};
-
-const stringToHexMap: { [key: string]: string } = {};
-for (const key in hexToStringMap) {
-  stringToHexMap[hexToStringMap[key]] = key;
-}
-
-const specialStringToHexMap: { [key: string]: string } = {
-  ど: "34",
-  ヘ: "CD",
-  ベ: "3D",
-  ペ: "47",
-  リ: "D8",
-  "\n": "4F",
-};
 
 export default App;
