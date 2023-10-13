@@ -40,3 +40,32 @@
 .read-the-docs {
   color: #888;
 }
+
+.input-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+textarea {
+  border: 1px solid #aaa;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #555;
+}

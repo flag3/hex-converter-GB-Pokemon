@@ -88,23 +88,48 @@ function App() {
     return program;
   };
 
+  const handleReset = () => {
+    setString("");
+    setHex("");
+    setProgram("");
+  };
+
   return (
     <div className="App">
-      <h2>Pokemon Z80 Hex and String Converter</h2>
+      <h2>Hex Converter for Game Boy Pokémon</h2>
 
-      <label>文字列</label>
-      <textarea
-        value={string}
-        onChange={handleStringChange}
-        rows={20}
-        cols={40}
-      />
+      <div className="input-container">
+        <div>
+          <label>Text</label>
+          <textarea
+            value={string}
+            onChange={handleStringChange}
+            rows={20}
+            cols={48}
+          />
+        </div>
 
-      <label>16進数</label>
-      <textarea value={hex} onChange={handleHexChange} rows={20} cols={40} />
+        <div>
+          <label>Hex</label>
+          <textarea
+            value={hex}
+            onChange={handleHexChange}
+            rows={20}
+            cols={48}
+          />
+        </div>
 
-      <label>Z80</label>
-      <textarea value={program} readOnly rows={20} cols={40} />
+        <div>
+          <label>Instruction</label>
+          <textarea value={program} readOnly rows={20} cols={48} />
+        </div>
+      </div>
+
+      <div>
+        <button onClick={handleReset}>
+          <span className="material-icons-outlined">delete</span>
+        </button>
+      </div>
     </div>
   );
 }
