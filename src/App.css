@@ -69,3 +69,19 @@ button {
 button:hover {
   background-color: #555;
 }
+
+@media screen and (max-width: 768px) {
+  .App {
+    display: block;
+  }
+
+  .input-container {
+    display: block;
+  }
+
+  textarea {
+    width: 100%;
+    height: 15vh;
+    margin-bottom: 20px;
+  }
+}
