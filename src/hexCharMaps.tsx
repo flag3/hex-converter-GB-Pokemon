@@ -257,12 +257,7 @@ export const hexCharMap: { [key: string]: string } = {
   FF: "９",
 };
 
-export const charHexMap: { [key: string]: string } = {};
-for (const key in hexCharMap) {
-  charHexMap[hexCharMap[key]] = key;
-}
-
-export const specialCharHexMap: { [key: string]: string } = {
+const specialCharHexMap: { [key: string]: string } = {
   ど: "34",
   ベ: "3D",
   ペ: "47",
@@ -283,3 +278,13 @@ export const specialCharHexMap: { [key: string]: string } = {
   "8": "FE",
   "9": "FF",
 };
+
+export const charHexMap: { [key: string]: string } = {};
+
+for (const key in hexCharMap) {
+  charHexMap[hexCharMap[key]] = key;
+}
+
+for (const key in specialCharHexMap) {
+  charHexMap[key] = specialCharHexMap[key];
+}

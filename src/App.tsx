@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import { hexInstructionMap } from "./hexInstructionMap";
 import { hexCBInstructionMap } from "./hexCBInstructionMap";
-import { charHexMap, hexCharMap, specialCharHexMap } from "./hexCharMaps";
+import { charHexMap, hexCharMap } from "./hexCharMaps";
 import "./App.css";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
   const textToHex = (str: string) => {
     return str
       .split("")
-      .map((char) => specialCharHexMap[char] || charHexMap[char] || "")
+      .map((char) => charHexMap[char] || "")
       .join(" ");
   };
 
