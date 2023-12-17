@@ -1,58 +1,53 @@
 import { useState, ChangeEvent } from "react";
-import { hexToZ80InstructionMap } from "./hexToZ80InstructionMap";
-import { hexToCBPrefixedZ80InstructionMap } from "./hexToCBPrefixedZ80InstructionMap";
-import {
-  stringToHexMap,
-  hexToStringMap,
-  specialStringToHexMap,
-} from "./stringAndHexMaps";
+import { hexInstructionMap } from "./hexInstructionMap";
+import { hexCBInstructionMap } from "./hexCBInstructionMap";
+import { charHexMap, hexCharMap, specialCharHexMap } from "./hexCharMaps";
 import "./App.css";
 
 function App() {
-  const [string, setString] = useState("");
+  const [text, setText] = useState("");
   const [hex, setHex] = useState("");
   const [program, setProgram] = useState("");
 
-  const handleStringChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const newString = event.target.value;
-    const newHex = stringToHex(newString);
-    const newProgram = hexToZ80Program(newHex.replace(/\s/g, ""));
-    setString(newString);
+  const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = event.target.value;
+    const newHex = textToHex(newText);
+    const newProgram = hexToProgram(newHex.replace(/\s/g, ""));
+    setText(newText);
     setHex(newHex);
     setProgram(newProgram);
   };
 
   const handleHexChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newHex = event.target.value.replace(/[^0-9A-Fa-f\s]/g, "");
-    const newString = hexToString(newHex.replace(/\s/g, "").toUpperCase());
-    const newProgram = hexToZ80Program(newHex.replace(/\s/g, "").toUpperCase());
+    const newText = hexToText(newHex.replace(/\s/g, "").toUpperCase());
+    const newProgram = hexToProgram(newHex.replace(/\s/g, "").toUpperCase());
     setHex(newHex);
-    setString(newString);
+    setText(newText);
     setProgram(newProgram);
   };
 
-  const stringToHex = (str: string) => {
+  const textToHex = (str: string) => {
     return str
       .split("")
-      .map((char) => specialStringToHexMap[char] || stringToHexMap[char] || "")
+      .map((char) => specialCharHexMap[char] || charHexMap[char] || "")
       .join(" ");
   };
 
-  const hexToString = (hex: string) => {
+  const hexToText = (hex: string) => {
     const hexArray = hex.match(/.{1,2}/g) || [];
-    return hexArray.map((hex) => hexToStringMap[hex] || "").join("");
+    return hexArray.map((hex) => hexCharMap[hex] || "").join("");
   };
 
-  const hexToZ80Program = (hex: string) => {
+  const hexToProgram = (hex: string) => {
     const hexArray = hex.match(/.{1,2}/g) || [];
     let program = "";
     for (let i = 0; i < hexArray.length; i++) {
       let instruction: string;
       if (hexArray[i] === "CB") {
-        instruction =
-          hexToCBPrefixedZ80InstructionMap[hexArray[++i]] || "prefix cb";
+        instruction = hexCBInstructionMap[hexArray[++i]] || "db   CB";
       } else {
-        instruction = hexToZ80InstructionMap[hexArray[i]] || "";
+        instruction = hexInstructionMap[hexArray[i]] || "";
       }
 
       const operandCount = (instruction.match(/\*/g) || []).length;
@@ -70,7 +65,7 @@ function App() {
               ? operands[0].length === 1
                 ? operands[0] + "*"
                 : operands[0]
-              : "**")
+              : "**"),
         );
       } else if (operandCount === 1) {
         instruction = instruction.replace(
@@ -79,7 +74,7 @@ function App() {
             ? operands[0].length === 1
               ? operands[0] + "*"
               : operands[0]
-            : "**"
+            : "**",
         );
       }
       program += instruction + "\n";
@@ -89,7 +84,7 @@ function App() {
   };
 
   const handleReset = () => {
-    setString("");
+    setText("");
     setHex("");
     setProgram("");
   };
@@ -102,8 +97,8 @@ function App() {
         <div>
           <label>Text</label>
           <textarea
-            value={string}
-            onChange={handleStringChange}
+            value={text}
+            onChange={handleTextChange}
             rows={20}
             cols={48}
           />
@@ -120,7 +115,7 @@ function App() {
         </div>
 
         <div>
-          <label>Instruction</label>
+          <label>Program</label>
           <textarea value={program} readOnly rows={20} cols={48} />
         </div>
       </div>

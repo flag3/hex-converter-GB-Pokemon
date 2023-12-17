@@ -1,4 +1,4 @@
-export const hexToCBPrefixedZ80InstructionMap: { [key: string]: string } = {
+export const hexCBInstructionMap: { [key: string]: string } = {
   "00": "rlc  b",
   "01": "rlc  c",
   "02": "rlc  d",

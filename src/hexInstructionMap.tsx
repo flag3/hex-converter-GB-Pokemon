@@ -1,4 +1,4 @@
-export const hexToZ80InstructionMap: { [key: string]: string } = {
+export const hexInstructionMap: { [key: string]: string } = {
   "00": "nop  ",
   "01": "ld   bc,**",
   "02": "ld   (bc),a",

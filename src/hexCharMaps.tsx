@@ -1,4 +1,4 @@
-export const hexToStringMap: { [key: string]: string } = {
+export const hexCharMap: { [key: string]: string } = {
   "00": "-",
   "01": "イ゛",
   "02": "ウ゛",
@@ -257,12 +257,12 @@ export const hexToStringMap: { [key: string]: string } = {
   FF: "９",
 };
 
-export const stringToHexMap: { [key: string]: string } = {};
-for (const key in hexToStringMap) {
-  stringToHexMap[hexToStringMap[key]] = key;
+export const charHexMap: { [key: string]: string } = {};
+for (const key in hexCharMap) {
+  charHexMap[hexCharMap[key]] = key;
 }
 
-export const specialStringToHexMap: { [key: string]: string } = {
+export const specialCharHexMap: { [key: string]: string } = {
   ど: "34",
   ベ: "3D",
   ペ: "47",
