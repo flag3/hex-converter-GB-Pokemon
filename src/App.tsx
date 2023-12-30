@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
-import { hexInstructionMap } from "./hexInstructionMap";
-import { hexCBInstructionMap } from "./hexCBInstructionMap";
-import { charHexMap, hexCharMap } from "./hexCharMaps";
+import InputArea from "./components/InputArea";
+import ResetButton from "./components/ResetButton";
+import { textToHex, hexToText, hexToProgram } from "./utils/hexUtils";
 import "./App.css";
 
 function App() {
@@ -27,62 +27,6 @@ function App() {
     setProgram(newProgram);
   };
 
-  const textToHex = (str: string) => {
-    return str
-      .split("")
-      .map((char) => charHexMap[char] || "")
-      .join(" ");
-  };
-
-  const hexToText = (hex: string) => {
-    const hexArray = hex.match(/.{1,2}/g) || [];
-    return hexArray.map((hex) => hexCharMap[hex] || "").join("");
-  };
-
-  const hexToProgram = (hex: string) => {
-    const hexArray = hex.match(/.{1,2}/g) || [];
-    let program = "";
-    for (let i = 0; i < hexArray.length; i++) {
-      let instruction: string;
-      if (hexArray[i] === "CB") {
-        instruction = hexCBInstructionMap[hexArray[++i]] || "db   CB";
-      } else {
-        instruction = hexInstructionMap[hexArray[i]] || "";
-      }
-
-      const operandCount = (instruction.match(/\*/g) || []).length;
-      const operands = hexArray.slice(i + 1, i + 1 + operandCount);
-
-      if (operandCount === 2) {
-        instruction = instruction.replace(
-          "**",
-          (operands[1]
-            ? operands[1].length === 1
-              ? operands[1] + "*"
-              : operands[1]
-            : "**") +
-            (operands[0]
-              ? operands[0].length === 1
-                ? operands[0] + "*"
-                : operands[0]
-              : "**"),
-        );
-      } else if (operandCount === 1) {
-        instruction = instruction.replace(
-          "*",
-          operands[0]
-            ? operands[0].length === 1
-              ? operands[0] + "*"
-              : operands[0]
-            : "**",
-        );
-      }
-      program += instruction + "\n";
-      i += operandCount;
-    }
-    return program;
-  };
-
   const handleReset = () => {
     setText("");
     setHex("");
@@ -92,39 +36,12 @@ function App() {
   return (
     <div className="App">
       <h2>Hex Converter for Game Boy Pokémon</h2>
-
       <div className="input-container">
-        <div>
-          <label>Text</label>
-          <textarea
-            value={text}
-            onChange={handleTextChange}
-            rows={20}
-            cols={48}
-          />
-        </div>
-
-        <div>
-          <label>Hex</label>
-          <textarea
-            value={hex}
-            onChange={handleHexChange}
-            rows={20}
-            cols={48}
-          />
-        </div>
-
-        <div>
-          <label>Program</label>
-          <textarea value={program} readOnly rows={20} cols={48} />
-        </div>
+        <InputArea label="Text" value={text} onChange={handleTextChange} />
+        <InputArea label="Hex" value={hex} onChange={handleHexChange} />
+        <InputArea label="Program" value={program} readOnly />
       </div>
-
-      <div>
-        <button onClick={handleReset}>
-          <span className="material-icons-outlined">delete</span>
-        </button>
-      </div>
+      <ResetButton onClick={handleReset} />
     </div>
   );
 }
