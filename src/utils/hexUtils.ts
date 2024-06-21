@@ -1,17 +1,39 @@
 import { hexCBInstructionMap } from "./../data/hexCBInstructionMap";
 import { hexInstructionMap } from "./../data/hexInstructionMap";
-import { hexCharMap, charHexMap } from "./../data/hexCharMaps";
+import { hexCharJPMap, charHexJPMap } from "./../data/hexCharJPMaps";
+import { hexCharENMap, charHexENMap } from "./../data/hexCharENMaps";
+import { Language } from "./../types";
 
-export const textToHex = (text: string) => {
+const charHexMap = (language: Language) => {
+  switch (language) {
+    case "en":
+      return charHexENMap;
+    case "jp":
+      return charHexJPMap;
+  }
+  return charHexENMap;
+};
+
+const hexCharMap = (language: Language) => {
+  switch (language) {
+    case "en":
+      return hexCharENMap;
+    case "jp":
+      return hexCharJPMap;
+  }
+  return hexCharENMap;
+};
+
+export const textToHex = (text: string, language: Language) => {
   return text
     .split("")
-    .map((char) => charHexMap[char] || "")
+    .map((char) => charHexMap(language)[char] || "")
     .join(" ");
 };
 
-export const hexToText = (hex: string) => {
+export const hexToText = (hex: string, language: Language) => {
   const hexArray = hex.match(/.{1,2}/g) || [];
-  return hexArray.map((hex) => hexCharMap[hex] || "").join("");
+  return hexArray.map((hex) => hexCharMap(language)[hex] || "").join("");
 };
 
 export const hexToProgram = (hex: string) => {
