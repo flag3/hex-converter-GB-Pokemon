@@ -1,37 +1,36 @@
-import { hexCBInstructionMap } from "./../data/hexCBInstructionMap";
-import { hexInstructionMap } from "./../data/hexInstructionMap";
-import { hexCharJPMap, charHexJPMap } from "./../data/hexCharJPMaps";
-import { hexCharENMap, charHexENMap } from "./../data/hexCharENMaps";
-import { Language } from "./../types";
+import { hexCBInstructionMap } from "./../constants/hexCBInstructionMap";
+import { hexInstructionMap } from "./../constants/hexInstructionMap";
+import { hexCharJPMap, charHexJPMap } from "./../constants/hexCharJPMaps";
+import { hexCharENMap, charHexENMap } from "./../constants/hexCharENMaps";
 
-const charHexMap = (language: Language) => {
+const charHexMap = (language: string) => {
   switch (language) {
     case "en":
       return charHexENMap;
-    case "jp":
+    case "ja":
       return charHexJPMap;
   }
   return charHexENMap;
 };
 
-const hexCharMap = (language: Language) => {
+const hexCharMap = (language: string) => {
   switch (language) {
     case "en":
       return hexCharENMap;
-    case "jp":
+    case "ja":
       return hexCharJPMap;
   }
   return hexCharENMap;
 };
 
-export const textToHex = (text: string, language: Language) => {
+export const textToHex = (text: string, language: string) => {
   return text
     .split("")
     .map((char) => charHexMap(language)[char] || "")
     .join(" ");
 };
 
-export const hexToText = (hex: string, language: Language) => {
+export const hexToText = (hex: string, language: string) => {
   const hexArray = hex.match(/.{1,2}/g) || [];
   return hexArray.map((hex) => hexCharMap(language)[hex] || "").join("");
 };
