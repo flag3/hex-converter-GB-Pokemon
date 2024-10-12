@@ -24,10 +24,27 @@ const hexCharMap = (language: string) => {
 };
 
 export const textToHex = (text: string, language: string) => {
-  return text
-    .split("")
-    .map((char) => charHexMap(language)[char] || "")
-    .join(" ");
+  const result = [];
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (nextChar === "\u3099" || nextChar === "\u309A") {
+      const combinedChar = char + nextChar;
+
+      if (charHexMap(language)[combinedChar]) {
+        result.push(charHexMap(language)[combinedChar]);
+      } else {
+        result.push("");
+      }
+
+      i++;
+    } else {
+      result.push(charHexMap(language)[char] || "");
+    }
+  }
+
+  return result.join(" ");
 };
 
 export const hexToText = (hex: string, language: string) => {
