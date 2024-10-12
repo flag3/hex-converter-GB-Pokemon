@@ -78,3 +78,204 @@ export const hexToProgram = (hex: string) => {
   }
   return program;
 };
+
+const normalize = (str: string) =>
+  str.toLowerCase().replace(/\s+/g, " ").trim();
+
+const patternToRegex = (pattern: string): RegExp => {
+  let regexStr = "";
+  let i = 0;
+  while (i < pattern.length) {
+    if (pattern[i] === "*") {
+      if (i + 1 < pattern.length && pattern[i + 1] === "*") {
+        regexStr += "([0-9A-Fa-f]{4})";
+        i += 2;
+      } else {
+        regexStr += "([0-9A-Fa-f]{2})";
+        i += 1;
+      }
+    } else if (pattern[i] === ",") {
+      regexStr += "\\s*,\\s*";
+      i += 1;
+    } else {
+      const specialChars = /[.*+?^=!:${}()|[\]/\\]/;
+      if (specialChars.test(pattern[i])) {
+        regexStr += "\\" + pattern[i];
+      } else {
+        regexStr += pattern[i];
+      }
+      i += 1;
+    }
+  }
+  return new RegExp(`^${regexStr}$`);
+};
+
+export const programToHex = (program: string): string => {
+  const lines = program.split("\n");
+  let hexString = "";
+
+  interface InstructionInfo {
+    opcode: string;
+    operandPattern: string;
+  }
+
+  const instructionMap: { [instruction: string]: InstructionInfo[] } = {};
+  const cbInstructionMapParsed: { [instruction: string]: InstructionInfo[] } =
+    {};
+
+  for (const [hex, template] of Object.entries(hexInstructionMap)) {
+    const normalizedTemplate = normalize(template);
+    const firstSpaceIndex = normalizedTemplate.indexOf(" ");
+    if (firstSpaceIndex === -1) {
+      const instruction = normalizedTemplate;
+      const operandPattern = "";
+
+      if (!instructionMap[instruction]) {
+        instructionMap[instruction] = [];
+      }
+
+      instructionMap[instruction].push({
+        opcode: hex.toUpperCase(),
+        operandPattern: operandPattern,
+      });
+    } else {
+      const instruction = normalizedTemplate.slice(0, firstSpaceIndex);
+      const operandPattern = normalizedTemplate
+        .slice(firstSpaceIndex + 1)
+        .trim();
+
+      if (!instructionMap[instruction]) {
+        instructionMap[instruction] = [];
+      }
+
+      instructionMap[instruction].push({
+        opcode: hex.toUpperCase(),
+        operandPattern: operandPattern,
+      });
+    }
+  }
+
+  for (const [hex, template] of Object.entries(hexCBInstructionMap)) {
+    const normalizedTemplate = normalize(template);
+    if (!cbInstructionMapParsed[normalizedTemplate]) {
+      cbInstructionMapParsed[normalizedTemplate] = [];
+    }
+
+    cbInstructionMapParsed[normalizedTemplate].push({
+      opcode: hex.toUpperCase(),
+      operandPattern: "",
+    });
+  }
+
+  const sortInstructionMap = (map: {
+    [instruction: string]: InstructionInfo[];
+  }) => {
+    for (const instruction in map) {
+      map[instruction].sort((a, b) => {
+        const aWildcards = (a.operandPattern.match(/\*/g) || []).length;
+        const bWildcards = (b.operandPattern.match(/\*/g) || []).length;
+        return aWildcards - bWildcards;
+      });
+    }
+  };
+
+  sortInstructionMap(instructionMap);
+  sortInstructionMap(cbInstructionMapParsed);
+
+  const parseInstruction = (
+    instructionPart: string,
+    operandPart: string,
+    map: { [instruction: string]: InstructionInfo[] },
+  ): { opcode: string; operandsHex: string } | null => {
+    if (!map[instructionPart]) {
+      return null;
+    }
+
+    for (const instructionInfo of map[instructionPart]) {
+      const { opcode, operandPattern } = instructionInfo;
+
+      if (operandPattern === "") {
+        if (operandPart.length === 0) {
+          return { opcode, operandsHex: "" };
+        } else {
+          continue;
+        }
+      }
+
+      const regex = patternToRegex(operandPattern);
+      const match = operandPart.match(regex);
+
+      if (match) {
+        let operandsHex = "";
+
+        const operandMatches = match.slice(1);
+
+        for (let i = 0; i < operandMatches.length; i++) {
+          const wildcard = operandMatches[i];
+          if (operandPattern.includes("**")) {
+            const lowByte = wildcard.slice(2, 4);
+            const highByte = wildcard.slice(0, 2);
+            operandsHex += `${lowByte} ${highByte} `;
+          } else {
+            operandsHex += `${wildcard} `;
+          }
+        }
+
+        operandsHex = operandsHex.trim();
+
+        return { opcode, operandsHex };
+      }
+    }
+
+    return null;
+  };
+
+  lines.forEach((line) => {
+    line = line.trim();
+    if (!line) return;
+
+    line = line.replace(/\s+/g, " ").trim();
+
+    const normalizedLine = normalize(line);
+    if (cbInstructionMapParsed[normalizedLine]) {
+      const cbInstructionInfo = cbInstructionMapParsed[normalizedLine][0];
+      const opcode = `CB ${cbInstructionInfo.opcode}`;
+      hexString += `${opcode} `;
+      return;
+    }
+
+    let instructionPart = "";
+    let operandPart = "";
+
+    const firstSpaceIndex = line.indexOf(" ");
+    if (firstSpaceIndex === -1) {
+      instructionPart = normalize(line);
+      operandPart = "";
+    } else {
+      instructionPart = normalize(line.slice(0, firstSpaceIndex));
+      operandPart = line.slice(firstSpaceIndex + 1).trim();
+    }
+
+    const currentInstructionMap = instructionMap;
+
+    const parsed = parseInstruction(
+      instructionPart,
+      operandPart,
+      currentInstructionMap,
+    );
+
+    if (!parsed) {
+      return;
+    }
+
+    const { opcode, operandsHex } = parsed;
+
+    if (operandsHex) {
+      hexString += `${opcode} ${operandsHex} `;
+    } else {
+      hexString += `${opcode} `;
+    }
+  });
+
+  return hexString.trim();
+};

@@ -3,7 +3,12 @@ import "./../App.css";
 import { useTranslation } from "react-i18next";
 import InputArea from "./InputArea";
 import ResetButton from "./ResetButton";
-import { textToHex, hexToText, hexToProgram } from "./../utils/hexUtils";
+import {
+  textToHex,
+  hexToText,
+  hexToProgram,
+  programToHex,
+} from "./../utils/hexUtils";
 
 export default function HexConverter() {
   const [text, setText] = useState("");
@@ -30,6 +35,15 @@ export default function HexConverter() {
     setHex(newHex);
     setText(newText);
     setProgram(newProgram);
+  };
+
+  const handleProgramChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const newProgram = event.target.value;
+    const newHex = programToHex(newProgram);
+    const newText = hexToText(newHex.replace(/\s/g, ""), i18n.language);
+    setProgram(newProgram);
+    setHex(newHex);
+    setText(newText);
   };
 
   const handleReset = () => {
@@ -65,7 +79,11 @@ export default function HexConverter() {
       <div className="input-container">
         <InputArea label={t("text")} value={text} onChange={handleTextChange} />
         <InputArea label={t("hex")} value={hex} onChange={handleHexChange} />
-        <InputArea label={t("program")} value={program} readOnly />
+        <InputArea
+          label={t("program")}
+          value={program}
+          onChange={handleProgramChange}
+        />
       </div>
       <ResetButton onClick={handleReset} />
     </div>
