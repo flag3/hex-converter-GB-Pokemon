@@ -48,17 +48,27 @@ export const textToHex = (text: string, language: string) => {
 };
 
 export const hexToText = (hex: string, language: string) => {
-  const hexArray = hex.match(/.{1,2}/g) || [];
+  const hexArray =
+    hex
+      .replace(/\s/g, "")
+      .toUpperCase()
+      .match(/.{1,2}/g) || [];
   return hexArray.map((hex) => hexCharMap(language)[hex] || "").join("");
 };
 
 export const hexToProgram = (hex: string) => {
-  const hexArray = hex.match(/.{1,2}/g) || [];
+  const hexArray =
+    hex
+      .replace(/\s/g, "")
+      .toUpperCase()
+      .match(/.{1,2}/g) || [];
   let program = "";
   for (let i = 0; i < hexArray.length; i++) {
     let instruction: string;
     if (hexArray[i] === "CB") {
-      instruction = hexCBInstructionMap[hexArray[++i]] || "db   CB";
+      instruction =
+        hexCBInstructionMap[hexArray[++i]] ||
+        hexInstructionMap[hexArray[i - 1]];
     } else {
       instruction = hexInstructionMap[hexArray[i]] || "";
     }
@@ -69,29 +79,20 @@ export const hexToProgram = (hex: string) => {
     if (operandCount === 2) {
       instruction = instruction.replace(
         "**",
-        (operands[1]
-          ? operands[1].length === 1
-            ? operands[1] + "*"
-            : operands[1]
-          : "**") +
-          (operands[0]
-            ? operands[0].length === 1
-              ? operands[0] + "*"
-              : operands[0]
-            : "**"),
+        `${operands[1] ? (operands[1].length === 1 ? `${operands[1]}*` : operands[1]) : "**"}${operands[0] ? (operands[0].length === 1 ? `${operands[0]}*` : operands[0]) : "**"}`,
       );
     } else if (operandCount === 1) {
       instruction = instruction.replace(
         "*",
-        operands[0]
-          ? operands[0].length === 1
-            ? operands[0] + "*"
-            : operands[0]
-          : "**",
+        `${operands[0] ? (operands[0].length === 1 ? `${operands[0]}*` : operands[0]) : "**"}`,
       );
     }
-    program += instruction + "\n";
     i += operandCount;
+    if (i < hexArray.length - 1) {
+      program += `${instruction}\n`;
+    } else {
+      program += instruction;
+    }
   }
   return program;
 };

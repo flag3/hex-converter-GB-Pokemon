@@ -19,7 +19,7 @@ export default function HexConverter() {
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.target.value;
     const newHex = textToHex(newText, i18n.language);
-    const newProgram = hexToProgram(newHex.replace(/\s/g, ""));
+    const newProgram = hexToProgram(newHex);
     setText(newText);
     setHex(newHex);
     setProgram(newProgram);
@@ -27,11 +27,8 @@ export default function HexConverter() {
 
   const handleHexChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newHex = event.target.value.replace(/[^0-9A-Fa-f\s]/g, "");
-    const newText = hexToText(
-      newHex.replace(/\s/g, "").toUpperCase(),
-      i18n.language,
-    );
-    const newProgram = hexToProgram(newHex.replace(/\s/g, "").toUpperCase());
+    const newText = hexToText(newHex, i18n.language);
+    const newProgram = hexToProgram(newHex);
     setHex(newHex);
     setText(newText);
     setProgram(newProgram);
@@ -40,7 +37,7 @@ export default function HexConverter() {
   const handleProgramChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newProgram = event.target.value;
     const newHex = programToHex(newProgram);
-    const newText = hexToText(newHex.replace(/\s/g, ""), i18n.language);
+    const newText = hexToText(newHex, i18n.language);
     setProgram(newProgram);
     setHex(newHex);
     setText(newText);
