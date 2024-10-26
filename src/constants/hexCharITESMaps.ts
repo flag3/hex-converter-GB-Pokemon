@@ -1,27 +1,4 @@
-export const hexCharENMap: { [key: string]: string } = {
-  "00": "␀",
-  "49": "page",
-  "4A": "PKMN",
-  "4B": "_cont",
-  "4C": "autocont",
-  "4E": "\n",
-  "4F": "\n",
-  "50": "\n",
-  "51": "paragraph",
-  "52": "players name",
-  "53": "rivals name",
-  "54": "POKé",
-  "55": "cont",
-  "56": "……",
-  "57": "done",
-  "58": "prompt",
-  "59": "target",
-  "5A": "user",
-  "5B": "PC",
-  "5C": "TM",
-  "5D": "TRAINER",
-  "5E": "ROCKET",
-  "5F": ".",
+export const hexCharITESMap: { [key: string]: string } = {
   "60": "A",
   "61": "B",
   "62": "C",
@@ -38,10 +15,10 @@ export const hexCharENMap: { [key: string]: string } = {
   "6D": ":",
   "6E": "ぃ",
   "6F": "ぅ",
-  "70": "「",
-  "71": "」",
-  "72": "『",
-  "73": "』",
+  "70": "‘",
+  "71": "’",
+  "72": "“",
+  "73": "”",
   "74": "・",
   "75": "…",
   "76": "ぁ",
@@ -112,18 +89,49 @@ export const hexCharENMap: { [key: string]: string } = {
   B7: "x",
   B8: "y",
   B9: "z",
-  BA: "é",
-  BB: "'d",
-  BC: "'l",
-  BD: "'s",
-  BE: "'t",
-  BF: "'v",
+  BA: "à",
+  BB: "è",
+  BC: "é",
+  BD: "ù",
+  BE: "À",
+  BF: "Á",
+  C0: "Ä",
+  C1: "Ö",
+  C2: "Ü",
+  C3: "ä",
+  C4: "ö",
+  C5: "ü",
+  C6: "È",
+  C7: "É",
+  C8: "Ì",
+  C9: "Í",
+  CA: "Ñ",
+  CB: "Ò",
+  CC: "Ó",
+  CD: "Ù",
+  CE: "Ú",
+  CF: "á",
+  D0: "ì",
+  D1: "í",
+  D2: "ñ",
+  D3: "ò",
+  D4: "ó",
+  D5: "ú",
+  D6: "º",
+  D7: "&",
+  D8: "'d",
+  D9: "'l",
+  DA: "'m",
+  DB: "'r",
+  DC: "'s",
+  DD: "'t",
+  DE: "'v",
   E0: "'",
   E1: "PK",
   E2: "MN",
   E3: "-",
-  E4: "'r",
-  E5: "'m",
+  E4: "¿",
+  E5: "¡",
   E6: "?",
   E7: "!",
   E8: ".",
@@ -152,7 +160,7 @@ export const hexCharENMap: { [key: string]: string } = {
   FF: "9",
 };
 
-const specialCharHexENMap: { [key: string]: string } = {
+const specialCharHexITESMap: { [key: string]: string } = {
   A: "80",
   B: "81",
   C: "82",
@@ -168,12 +176,12 @@ const specialCharHexENMap: { [key: string]: string } = {
   V: "95",
 };
 
-export const charHexENMap: { [key: string]: string } = {};
+export const charHexITESMap: { [key: string]: string } = {};
 
-for (const key in hexCharENMap) {
-  charHexENMap[hexCharENMap[key]] = key;
+for (const key in hexCharITESMap) {
+  charHexITESMap[hexCharITESMap[key]] = key;
 }
 
-for (const key in specialCharHexENMap) {
-  charHexENMap[key] = specialCharHexENMap[key];
+for (const key in specialCharHexITESMap) {
+  charHexITESMap[key] = specialCharHexITESMap[key];
 }

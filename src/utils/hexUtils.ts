@@ -1,14 +1,24 @@
 import { hexCBInstructionMap } from "./../constants/hexCBInstructionMap";
 import { hexInstructionMap } from "./../constants/hexInstructionMap";
-import { hexCharJPMap, charHexJPMap } from "./../constants/hexCharJPMaps";
 import { hexCharENMap, charHexENMap } from "./../constants/hexCharENMaps";
+import { hexCharFRDEMap, charHexFRDEMap } from "./../constants/hexCharFRDEMaps";
+import { hexCharITESMap, charHexITESMap } from "./../constants/hexCharITESMaps";
+import { hexCharJAMap, charHexJAMap } from "./../constants/hexCharJAMaps";
 
 const charHexMap = (language: string) => {
   switch (language) {
     case "en":
       return charHexENMap;
+    case "fr":
+      return charHexFRDEMap;
+    case "de":
+      return charHexFRDEMap;
+    case "it":
+      return charHexITESMap;
+    case "es":
+      return charHexITESMap;
     case "ja":
-      return charHexJPMap;
+      return charHexJAMap;
   }
   return charHexENMap;
 };
@@ -17,8 +27,16 @@ const hexCharMap = (language: string) => {
   switch (language) {
     case "en":
       return hexCharENMap;
+    case "fr":
+      return hexCharFRDEMap;
+    case "de":
+      return hexCharFRDEMap;
+    case "it":
+      return hexCharITESMap;
+    case "es":
+      return hexCharITESMap;
     case "ja":
-      return hexCharJPMap;
+      return hexCharJAMap;
   }
   return hexCharENMap;
 };

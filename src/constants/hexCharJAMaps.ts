@@ -1,5 +1,5 @@
-export const hexCharJPMap: { [key: string]: string } = {
-  "00": "␀",
+export const hexCharJAMap: { [key: string]: string } = {
+  "00": "NULL",
   "01": "イ゙",
   "02": "ヴ",
   "03": "エ゙",
@@ -257,7 +257,7 @@ export const hexCharJPMap: { [key: string]: string } = {
   FF: "９",
 };
 
-const specialCharHexJPMap: { [key: string]: string } = {
+const specialCharHexJAMap: { [key: string]: string } = {
   が: "26",
   ベ: "3D",
   ペ: "47",
@@ -292,12 +292,12 @@ const specialCharHexJPMap: { [key: string]: string } = {
   "9": "FF",
 };
 
-export const charHexJPMap: { [key: string]: string } = {};
+export const charHexJAMap: { [key: string]: string } = {};
 
-for (const key in hexCharJPMap) {
-  charHexJPMap[hexCharJPMap[key]] = key;
+for (const key in hexCharJAMap) {
+  charHexJAMap[hexCharJAMap[key]] = key;
 }
 
-for (const key in specialCharHexJPMap) {
-  charHexJPMap[key] = specialCharHexJPMap[key];
+for (const key in specialCharHexJAMap) {
+  charHexJAMap[key] = specialCharHexJAMap[key];
 }
