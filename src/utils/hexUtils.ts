@@ -33,112 +33,55 @@ import {
   charHexJAGen2Map,
 } from "./../constants/hexCharJAGen2Maps";
 
+const getMap = (
+  gen: number,
+  gen1Map: { [key: string]: string },
+  gen2Map: { [key: string]: string },
+) => {
+  switch (gen) {
+    case 1:
+      return gen1Map;
+    case 2:
+      return gen2Map;
+    default:
+      return gen1Map;
+  }
+};
+
 const charHexMap = (language: string, gen: number) => {
   switch (language) {
     case "en":
-      switch (gen) {
-        case 1:
-          return charHexENGen1Map;
-        case 2:
-          return charHexENGen2Map;
-      }
-      return charHexENGen1Map;
+      return getMap(gen, charHexENGen1Map, charHexENGen2Map);
     case "fr":
-      switch (gen) {
-        case 1:
-          return charHexFRDEGen1Map;
-        case 2:
-          return charHexFRDEGen2Map;
-      }
-      return charHexFRDEGen1Map;
+      return getMap(gen, charHexFRDEGen1Map, charHexFRDEGen2Map);
     case "de":
-      switch (gen) {
-        case 1:
-          return charHexFRDEGen1Map;
-        case 2:
-          return charHexFRDEGen2Map;
-      }
-      return charHexFRDEGen1Map;
+      return getMap(gen, charHexFRDEGen1Map, charHexFRDEGen2Map);
     case "it":
-      switch (gen) {
-        case 1:
-          return charHexITESGen1Map;
-        case 2:
-          return charHexITESGen2Map;
-      }
-      return charHexITESGen1Map;
+      return getMap(gen, charHexITESGen1Map, charHexITESGen2Map);
     case "es":
-      switch (gen) {
-        case 1:
-          return charHexITESGen1Map;
-        case 2:
-          return charHexITESGen2Map;
-      }
-      return charHexITESGen1Map;
+      return getMap(gen, charHexITESGen1Map, charHexITESGen2Map);
     case "ja":
-      switch (gen) {
-        case 1:
-          return charHexJAGen1Map;
-        case 2:
-          return charHexJAGen2Map;
-      }
-      return charHexJAGen1Map;
+      return getMap(gen, charHexJAGen1Map, charHexJAGen2Map);
+    default:
+      return charHexENGen1Map;
   }
-  return charHexENGen1Map;
 };
 
 const hexCharMap = (language: string, gen: number) => {
   switch (language) {
     case "en":
-      switch (gen) {
-        case 1:
-          return hexCharENGen1Map;
-        case 2:
-          return hexCharENGen2Map;
-      }
-      return hexCharENGen1Map;
+      return getMap(gen, hexCharENGen1Map, hexCharENGen2Map);
     case "fr":
-      switch (gen) {
-        case 1:
-          return hexCharFRDEGen1Map;
-        case 2:
-          return hexCharFRDEGen2Map;
-      }
-      return hexCharFRDEGen1Map;
     case "de":
-      switch (gen) {
-        case 1:
-          return hexCharFRDEGen1Map;
-        case 2:
-          return hexCharFRDEGen2Map;
-      }
-      return hexCharFRDEGen1Map;
+      return getMap(gen, hexCharFRDEGen1Map, hexCharFRDEGen2Map);
     case "it":
-      switch (gen) {
-        case 1:
-          return hexCharITESGen1Map;
-        case 2:
-          return hexCharITESGen2Map;
-      }
-      return hexCharITESGen1Map;
     case "es":
-      switch (gen) {
-        case 1:
-          return hexCharITESGen1Map;
-        case 2:
-          return hexCharITESGen2Map;
-      }
-      return hexCharITESGen1Map;
+      return getMap(gen, hexCharITESGen1Map, hexCharITESGen2Map);
     case "ja":
-      switch (gen) {
-        case 1:
-          return hexCharJAGen1Map;
-        case 2:
-          return hexCharJAGen2Map;
-      }
-      return hexCharJAGen1Map;
+      return getMap(gen, hexCharJAGen1Map, hexCharJAGen2Map);
+    default:
+      return hexCharENGen1Map;
   }
-  return hexCharENGen1Map;
 };
 
 export const textToHex = (text: string, language: string, gen: number) => {
