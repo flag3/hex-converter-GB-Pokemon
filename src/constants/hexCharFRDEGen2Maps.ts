@@ -1,7 +1,7 @@
-export const hexCharITESMap: { [key: string]: string } = {
-  "60": "A",
-  "61": "B",
-  "62": "C",
+export const hexCharFRDEGen2Map: { [key: string]: string } = {
+  "60": "█",
+  "61": "▲",
+  "62": "🖁",
   "63": "D",
   "64": "E",
   "65": "F",
@@ -15,8 +15,8 @@ export const hexCharITESMap: { [key: string]: string } = {
   "6D": ":",
   "6E": "ぃ",
   "6F": "ぅ",
-  "70": "‘",
-  "71": "’",
+  "70": "PO",
+  "71": "Ké",
   "72": "“",
   "73": "”",
   "74": "・",
@@ -93,51 +93,43 @@ export const hexCharITESMap: { [key: string]: string } = {
   BB: "è",
   BC: "é",
   BD: "ù",
-  BE: "À",
-  BF: "Á",
+  BE: "ß",
+  BF: "ç",
   C0: "Ä",
   C1: "Ö",
   C2: "Ü",
   C3: "ä",
   C4: "ö",
   C5: "ü",
-  C6: "È",
-  C7: "É",
-  C8: "Ì",
-  C9: "Í",
-  CA: "Ñ",
-  CB: "Ò",
-  CC: "Ó",
-  CD: "Ù",
-  CE: "Ú",
-  CF: "á",
-  D0: "ì",
-  D1: "í",
-  D2: "ñ",
-  D3: "ò",
-  D4: "ó",
-  D5: "ú",
-  D6: "º",
-  D7: "&",
-  D8: "'d",
-  D9: "'l",
-  DA: "'m",
-  DB: "'r",
+  C6: "ë",
+  C7: "ï",
+  C8: "â",
+  C9: "ô",
+  CA: "û",
+  CB: "ê",
+  CC: "î",
+  D4: "c'",
+  D5: "d'",
+  D6: "j'",
+  D7: "l'",
+  D8: "m'",
+  D9: "n'",
+  DA: "p'",
+  DB: "s'",
   DC: "'s",
-  DD: "'t",
-  DE: "'v",
+  DD: "t'",
+  DE: "u'",
+  DF: "y'",
   E0: "'",
   E1: "PK",
   E2: "MN",
   E3: "-",
-  E4: "¿",
-  E5: "¡",
+  E4: "+",
   E6: "?",
   E7: "!",
   E8: ".",
-  E9: "ァ",
-  EA: "ゥ",
-  EB: "ェ",
+  E9: "&",
+  EA: "é",
   EC: "▷",
   ED: "▶",
   EE: "▼",
@@ -160,10 +152,7 @@ export const hexCharITESMap: { [key: string]: string } = {
   FF: "9",
 };
 
-const specialCharHexITESMap: { [key: string]: string } = {
-  A: "80",
-  B: "81",
-  C: "82",
+const specialCharHexFRDEGen2Map: { [key: string]: string } = {
   D: "83",
   E: "84",
   F: "85",
@@ -174,14 +163,15 @@ const specialCharHexITESMap: { [key: string]: string } = {
   M: "8C",
   S: "92",
   V: "95",
+  é: "BC",
 };
 
-export const charHexITESMap: { [key: string]: string } = {};
+export const charHexFRDEGen2Map: { [key: string]: string } = {};
 
-for (const key in hexCharITESMap) {
-  charHexITESMap[hexCharITESMap[key]] = key;
+for (const key in hexCharFRDEGen2Map) {
+  charHexFRDEGen2Map[hexCharFRDEGen2Map[key]] = key;
 }
 
-for (const key in specialCharHexITESMap) {
-  charHexITESMap[key] = specialCharHexITESMap[key];
+for (const key in specialCharHexFRDEGen2Map) {
+  charHexFRDEGen2Map[key] = specialCharHexFRDEGen2Map[key];
 }

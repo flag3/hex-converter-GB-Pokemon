@@ -14,11 +14,12 @@ export default function HexConverter() {
   const [text, setText] = useState("");
   const [hex, setHex] = useState("");
   const [program, setProgram] = useState("");
+  const [gen, setGen] = useState(1);
   const { t, i18n } = useTranslation();
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.target.value;
-    const newHex = textToHex(newText, i18n.language);
+    const newHex = textToHex(newText, i18n.language, gen);
     const newProgram = hexToProgram(newHex);
     setText(newText);
     setHex(newHex);
@@ -27,7 +28,7 @@ export default function HexConverter() {
 
   const handleHexChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newHex = event.target.value.replace(/[^0-9A-Fa-f\s]/g, "");
-    const newText = hexToText(newHex, i18n.language);
+    const newText = hexToText(newHex, i18n.language, gen);
     const newProgram = hexToProgram(newHex);
     setHex(newHex);
     setText(newText);
@@ -37,7 +38,7 @@ export default function HexConverter() {
   const handleProgramChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newProgram = event.target.value;
     const newHex = programToHex(newProgram);
-    const newText = hexToText(newHex, i18n.language);
+    const newText = hexToText(newHex, i18n.language, gen);
     setProgram(newProgram);
     setHex(newHex);
     setText(newText);
@@ -56,9 +57,21 @@ export default function HexConverter() {
     i18n.changeLanguage(selectedLanguage);
   };
 
+  const handleGenChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const newGen = parseInt(event.target.value);
+    setGen(newGen);
+    const newHex = textToHex(text, i18n.language, newGen);
+    const newProgram = hexToProgram(newHex);
+    setHex(newHex);
+    setProgram(newProgram);
+  };
+
   return (
     <div>
       <h2>{t("title")}</h2>
+      <div>
       {t("language")}
       <select
         id="language-selector"
@@ -73,6 +86,18 @@ export default function HexConverter() {
         <option value="ja">日本語</option>
         <option value="ko">한국어</option>
       </select>
+      </div>
+      <div>
+      {t("gen")}
+      <select
+        id="generation-selector"
+        onChange={handleGenChange}
+        value={gen}
+      >
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+      </div>
       <div className="input-container">
         <InputArea label={t("text")} value={text} onChange={handleTextChange} />
         <InputArea label={t("hex")} value={hex} onChange={handleHexChange} />

@@ -1,27 +1,4 @@
-export const hexCharENMap: { [key: string]: string } = {
-  "00": "␀",
-  "49": "page",
-  "4A": "PKMN",
-  "4B": "_cont",
-  "4C": "autocont",
-  "4E": "\n",
-  "4F": "\n",
-  "50": "\n",
-  "51": "paragraph",
-  "52": "players name",
-  "53": "rivals name",
-  "54": "POKé",
-  "55": "cont",
-  "56": "……",
-  "57": "done",
-  "58": "prompt",
-  "59": "target",
-  "5A": "user",
-  "5B": "PC",
-  "5C": "TM",
-  "5D": "TRAINER",
-  "5E": "ROCKET",
-  "5F": ".",
+export const hexCharFRDEGen1Map: { [key: string]: string } = {
   "60": "A",
   "61": "B",
   "62": "C",
@@ -38,10 +15,10 @@ export const hexCharENMap: { [key: string]: string } = {
   "6D": ":",
   "6E": "ぃ",
   "6F": "ぅ",
-  "70": "「",
-  "71": "」",
-  "72": "『",
-  "73": "』",
+  "70": "‘",
+  "71": "’",
+  "72": "“",
+  "73": "”",
   "74": "・",
   "75": "…",
   "76": "ぁ",
@@ -112,18 +89,42 @@ export const hexCharENMap: { [key: string]: string } = {
   B7: "x",
   B8: "y",
   B9: "z",
-  BA: "é",
-  BB: "'d",
-  BC: "'l",
-  BD: "'s",
-  BE: "'t",
-  BF: "'v",
+  BA: "à",
+  BB: "è",
+  BC: "é",
+  BD: "ù",
+  BE: "ß",
+  BF: "ç",
+  C0: "Ä",
+  C1: "Ö",
+  C2: "Ü",
+  C3: "ä",
+  C4: "ö",
+  C5: "ü",
+  C6: "ë",
+  C7: "ï",
+  C8: "â",
+  C9: "ô",
+  CA: "û",
+  CB: "ê",
+  CC: "î",
+  D4: "c'",
+  D5: "d'",
+  D6: "j'",
+  D7: "l'",
+  D8: "m'",
+  D9: "n'",
+  DA: "p'",
+  DB: "s'",
+  DC: "'s",
+  DD: "t'",
+  DE: "u'",
+  DF: "y'",
   E0: "'",
   E1: "PK",
   E2: "MN",
   E3: "-",
-  E4: "'r",
-  E5: "'m",
+  E4: "+",
   E6: "?",
   E7: "!",
   E8: ".",
@@ -152,7 +153,7 @@ export const hexCharENMap: { [key: string]: string } = {
   FF: "9",
 };
 
-const specialCharHexENMap: { [key: string]: string } = {
+const specialCharHexFRDEGen1Map: { [key: string]: string } = {
   A: "80",
   B: "81",
   C: "82",
@@ -168,12 +169,12 @@ const specialCharHexENMap: { [key: string]: string } = {
   V: "95",
 };
 
-export const charHexENMap: { [key: string]: string } = {};
+export const charHexFRDEGen1Map: { [key: string]: string } = {};
 
-for (const key in hexCharENMap) {
-  charHexENMap[hexCharENMap[key]] = key;
+for (const key in hexCharFRDEGen1Map) {
+  charHexFRDEGen1Map[hexCharFRDEGen1Map[key]] = key;
 }
 
-for (const key in specialCharHexENMap) {
-  charHexENMap[key] = specialCharHexENMap[key];
+for (const key in specialCharHexFRDEGen1Map) {
+  charHexFRDEGen1Map[key] = specialCharHexFRDEGen1Map[key];
 }

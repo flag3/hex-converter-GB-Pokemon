@@ -1,4 +1,4 @@
-export const hexCharFRDEMap: { [key: string]: string } = {
+export const hexCharITESGen1Map: { [key: string]: string } = {
   "60": "A",
   "61": "B",
   "62": "C",
@@ -93,38 +93,45 @@ export const hexCharFRDEMap: { [key: string]: string } = {
   BB: "è",
   BC: "é",
   BD: "ù",
-  BE: "ß",
-  BF: "ç",
+  BE: "À",
+  BF: "Á",
   C0: "Ä",
   C1: "Ö",
   C2: "Ü",
   C3: "ä",
   C4: "ö",
   C5: "ü",
-  C6: "ë",
-  C7: "ï",
-  C8: "â",
-  C9: "ô",
-  CA: "û",
-  CB: "ê",
-  CC: "î",
-  D4: "c'",
-  D5: "d'",
-  D6: "j'",
-  D7: "l'",
-  D8: "m'",
-  D9: "n'",
-  DA: "p'",
-  DB: "s'",
+  C6: "È",
+  C7: "É",
+  C8: "Ì",
+  C9: "Í",
+  CA: "Ñ",
+  CB: "Ò",
+  CC: "Ó",
+  CD: "Ù",
+  CE: "Ú",
+  CF: "á",
+  D0: "ì",
+  D1: "í",
+  D2: "ñ",
+  D3: "ò",
+  D4: "ó",
+  D5: "ú",
+  D6: "º",
+  D7: "&",
+  D8: "'d",
+  D9: "'l",
+  DA: "'m",
+  DB: "'r",
   DC: "'s",
-  DD: "t'",
-  DE: "u'",
-  DF: "y'",
+  DD: "'t",
+  DE: "'v",
   E0: "'",
   E1: "PK",
   E2: "MN",
   E3: "-",
-  E4: "+",
+  E4: "¿",
+  E5: "¡",
   E6: "?",
   E7: "!",
   E8: ".",
@@ -153,7 +160,7 @@ export const hexCharFRDEMap: { [key: string]: string } = {
   FF: "9",
 };
 
-const specialCharHexFRDEMap: { [key: string]: string } = {
+const specialCharHexITESGen1Map: { [key: string]: string } = {
   A: "80",
   B: "81",
   C: "82",
@@ -169,12 +176,12 @@ const specialCharHexFRDEMap: { [key: string]: string } = {
   V: "95",
 };
 
-export const charHexFRDEMap: { [key: string]: string } = {};
+export const charHexITESGen1Map: { [key: string]: string } = {};
 
-for (const key in hexCharFRDEMap) {
-  charHexFRDEMap[hexCharFRDEMap[key]] = key;
+for (const key in hexCharITESGen1Map) {
+  charHexITESGen1Map[hexCharITESGen1Map[key]] = key;
 }
 
-for (const key in specialCharHexFRDEMap) {
-  charHexFRDEMap[key] = specialCharHexFRDEMap[key];
+for (const key in specialCharHexITESGen1Map) {
+  charHexITESGen1Map[key] = specialCharHexITESGen1Map[key];
 }

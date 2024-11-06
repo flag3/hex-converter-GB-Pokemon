@@ -1,47 +1,147 @@
 import { hexCBInstructionMap } from "./../constants/hexCBInstructionMap";
 import { hexInstructionMap } from "./../constants/hexInstructionMap";
-import { hexCharENMap, charHexENMap } from "./../constants/hexCharENMaps";
-import { hexCharFRDEMap, charHexFRDEMap } from "./../constants/hexCharFRDEMaps";
-import { hexCharITESMap, charHexITESMap } from "./../constants/hexCharITESMaps";
-import { hexCharJAMap, charHexJAMap } from "./../constants/hexCharJAMaps";
+import {
+  hexCharENGen1Map,
+  charHexENGen1Map,
+} from "./../constants/hexCharENGen1Maps";
+import {
+  hexCharENGen2Map,
+  charHexENGen2Map,
+} from "./../constants/hexCharENGen2Maps";
+import {
+  hexCharFRDEGen1Map,
+  charHexFRDEGen1Map,
+} from "./../constants/hexCharFRDEGen1Maps";
+import {
+  hexCharFRDEGen2Map,
+  charHexFRDEGen2Map,
+} from "./../constants/hexCharFRDEGen2Maps";
+import {
+  hexCharITESGen1Map,
+  charHexITESGen1Map,
+} from "./../constants/hexCharITESGen1Maps";
+import {
+  hexCharITESGen2Map,
+  charHexITESGen2Map,
+} from "./../constants/hexCharITESGen2Maps";
+import {
+  hexCharJAGen1Map,
+  charHexJAGen1Map,
+} from "./../constants/hexCharJAGen1Maps";
+import {
+  hexCharJAGen2Map,
+  charHexJAGen2Map,
+} from "./../constants/hexCharJAGen2Maps";
 
-const charHexMap = (language: string) => {
+const charHexMap = (language: string, gen: number) => {
   switch (language) {
     case "en":
-      return charHexENMap;
+      switch (gen) {
+        case 1:
+          return charHexENGen1Map;
+        case 2:
+          return charHexENGen2Map;
+      }
+      return charHexENGen1Map;
     case "fr":
-      return charHexFRDEMap;
+      switch (gen) {
+        case 1:
+          return charHexFRDEGen1Map;
+        case 2:
+          return charHexFRDEGen2Map;
+      }
+      return charHexFRDEGen1Map;
     case "de":
-      return charHexFRDEMap;
+      switch (gen) {
+        case 1:
+          return charHexFRDEGen1Map;
+        case 2:
+          return charHexFRDEGen2Map;
+      }
+      return charHexFRDEGen1Map;
     case "it":
-      return charHexITESMap;
+      switch (gen) {
+        case 1:
+          return charHexITESGen1Map;
+        case 2:
+          return charHexITESGen2Map;
+      }
+      return charHexITESGen1Map;
     case "es":
-      return charHexITESMap;
+      switch (gen) {
+        case 1:
+          return charHexITESGen1Map;
+        case 2:
+          return charHexITESGen2Map;
+      }
+      return charHexITESGen1Map;
     case "ja":
-      return charHexJAMap;
+      switch (gen) {
+        case 1:
+          return charHexJAGen1Map;
+        case 2:
+          return charHexJAGen2Map;
+      }
+      return charHexJAGen1Map;
   }
-  return charHexENMap;
+  return charHexENGen1Map;
 };
 
-const hexCharMap = (language: string) => {
+const hexCharMap = (language: string, gen: number) => {
   switch (language) {
     case "en":
-      return hexCharENMap;
+      switch (gen) {
+        case 1:
+          return hexCharENGen1Map;
+        case 2:
+          return hexCharENGen2Map;
+      }
+      return hexCharENGen1Map;
     case "fr":
-      return hexCharFRDEMap;
+      switch (gen) {
+        case 1:
+          return hexCharFRDEGen1Map;
+        case 2:
+          return hexCharFRDEGen2Map;
+      }
+      return hexCharFRDEGen1Map;
     case "de":
-      return hexCharFRDEMap;
+      switch (gen) {
+        case 1:
+          return hexCharFRDEGen1Map;
+        case 2:
+          return hexCharFRDEGen2Map;
+      }
+      return hexCharFRDEGen1Map;
     case "it":
-      return hexCharITESMap;
+      switch (gen) {
+        case 1:
+          return hexCharITESGen1Map;
+        case 2:
+          return hexCharITESGen2Map;
+      }
+      return hexCharITESGen1Map;
     case "es":
-      return hexCharITESMap;
+      switch (gen) {
+        case 1:
+          return hexCharITESGen1Map;
+        case 2:
+          return hexCharITESGen2Map;
+      }
+      return hexCharITESGen1Map;
     case "ja":
-      return hexCharJAMap;
+      switch (gen) {
+        case 1:
+          return hexCharJAGen1Map;
+        case 2:
+          return hexCharJAGen2Map;
+      }
+      return hexCharJAGen1Map;
   }
-  return hexCharENMap;
+  return hexCharENGen1Map;
 };
 
-export const textToHex = (text: string, language: string) => {
+export const textToHex = (text: string, language: string, gen: number) => {
   const result = [];
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
@@ -50,28 +150,28 @@ export const textToHex = (text: string, language: string) => {
     if (nextChar === "\u3099" || nextChar === "\u309A") {
       const combinedChar = char + nextChar;
 
-      if (charHexMap(language)[combinedChar]) {
-        result.push(charHexMap(language)[combinedChar]);
+      if (charHexMap(language, gen)[combinedChar]) {
+        result.push(charHexMap(language, gen)[combinedChar]);
       } else {
         result.push("");
       }
 
       i++;
     } else {
-      result.push(charHexMap(language)[char] || "");
+      result.push(charHexMap(language, gen)[char] || "");
     }
   }
 
   return result.join(" ");
 };
 
-export const hexToText = (hex: string, language: string) => {
+export const hexToText = (hex: string, language: string, gen: number) => {
   const hexArray =
     hex
       .replace(/\s/g, "")
       .toUpperCase()
       .match(/.{1,2}/g) || [];
-  return hexArray.map((hex) => hexCharMap(language)[hex] || "").join("");
+  return hexArray.map((hex) => hexCharMap(language, gen)[hex] || "").join("");
 };
 
 export const hexToProgram = (hex: string) => {

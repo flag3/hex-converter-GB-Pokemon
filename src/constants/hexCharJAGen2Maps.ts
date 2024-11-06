@@ -1,5 +1,5 @@
-export const hexCharJAMap: { [key: string]: string } = {
-  "00": "NULL",
+export const hexCharJAGen2Map: { [key: string]: string } = {
+  "00": "？",
   "01": "イ゙",
   "02": "ヴ",
   "03": "エ゙",
@@ -28,15 +28,15 @@ export const hexCharJAMap: { [key: string]: string } = {
   "1A": "ビ",
   "1B": "ブ",
   "1C": "ボ",
-  "1D": "マ゙",
-  "1E": "ミ゙",
-  "1F": "ム゙",
+  "1D": "に　",
+  "1E": "って",
+  "1F": "を　",
   "20": "ィ゙",
   "21": "あ゙",
-  "22": "い゙",
-  "23": "ゔ",
-  "24": "え゙",
-  "25": "お゙",
+  "22": "た！",
+  "23": "こうげき",
+  "24": "は　",
+  "25": "の　",
   "26": "が",
   "27": "ぎ",
   "28": "ぐ",
@@ -52,17 +52,17 @@ export const hexCharJAMap: { [key: string]: string } = {
   "32": "づ",
   "33": "で",
   "34": "ど",
-  "35": "な゙",
-  "36": "に゙",
-  "37": "ぬ゙",
-  "38": "ね゙",
-  "39": "の゙",
+  "35": "ばん　どうろ",
+  "36": "わたし",
+  "37": "ここは　",
+  "38": "レッド",
+  "39": "グリーン",
   "3A": "ば",
   "3B": "び",
   "3C": "ぶ",
   "3D": "べ",
   "3E": "ぼ",
-  "3F": "ま゙",
+  "3F": "の　したっぱ",
   "40": "パ",
   "41": "ピ",
   "42": "プ",
@@ -72,8 +72,8 @@ export const hexCharJAMap: { [key: string]: string } = {
   "46": "ぷ",
   "47": "ぺ",
   "48": "ぽ",
-  "49": "ま゚",
-  "4A": "が",
+  "49": "おかあさん",
+  "4A": "が　",
   "4B": "文字送り",
   "4C": "自動送り",
   "4D": "も゚",
@@ -94,10 +94,10 @@ export const hexCharJAMap: { [key: string]: string } = {
   "5C": "わざマシン",
   "5D": "トレーナー",
   "5E": "ロケットだん",
-  "5F": "、、゜",
-  "60": "Ａ",
-  "61": "Ｂ",
-  "62": "Ｃ",
+  "5F": "。",
+  "60": "█",
+  "61": "▲",
+  "62": "🖁",
   "63": "Ｄ",
   "64": "Ｅ",
   "65": "Ｆ",
@@ -257,8 +257,7 @@ export const hexCharJAMap: { [key: string]: string } = {
   FF: "９",
 };
 
-const specialCharHexJAMap: { [key: string]: string } = {
-  が: "26",
+const specialCharHexJAGen2Map: { [key: string]: string } = {
   ベ: "3D",
   ペ: "47",
   A: "60",
@@ -292,12 +291,12 @@ const specialCharHexJAMap: { [key: string]: string } = {
   "9": "FF",
 };
 
-export const charHexJAMap: { [key: string]: string } = {};
+export const charHexJAGen2Map: { [key: string]: string } = {};
 
-for (const key in hexCharJAMap) {
-  charHexJAMap[hexCharJAMap[key]] = key;
+for (const key in hexCharJAGen2Map) {
+  charHexJAGen2Map[hexCharJAGen2Map[key]] = key;
 }
 
-for (const key in specialCharHexJAMap) {
-  charHexJAMap[key] = specialCharHexJAMap[key];
+for (const key in specialCharHexJAGen2Map) {
+  charHexJAGen2Map[key] = specialCharHexJAGen2Map[key];
 }

@@ -3,48 +3,99 @@ import { textToHex, hexToText, hexToProgram, programToHex } from "./hexUtils";
 
 describe("hexUtils", () => {
   describe("textToHex", () => {
-    it("should convert English text to hex correctly", () => {
+    it("should convert English text to hex correctly in gen1", () => {
       const text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       const language = "en";
+      const gen = 1;
       const expectedHex =
         "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
 
-      const result = textToHex(text, language);
+      const result = textToHex(text, language, gen);
       expect(result).toBe(expectedHex);
     });
 
-    it("should convert Japanese text to hex correctly", () => {
+    it("should convert English text to hex correctly in gen2", () => {
+      const text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      const language = "en";
+      const gen = 2;
+      const expectedHex =
+        "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
+
+      const result = textToHex(text, language, gen);
+      expect(result).toBe(expectedHex);
+    });
+
+    it("should convert Japanese text to hex correctly in gen1", () => {
       const text =
         "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ";
       const language = "ja";
+      const gen = 1;
       const expectedHex =
         "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
 
-      const result = textToHex(text, language);
+      const result = textToHex(text, language, gen);
+      expect(result).toBe(expectedHex);
+    });
+
+    it("should convert Japanese text to hex correctly in gen2", () => {
+      const text =
+        "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ";
+      const language = "ja";
+      const gen = 2;
+      const expectedHex =
+        "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
+
+      const result = textToHex(text, language, gen);
       expect(result).toBe(expectedHex);
     });
   });
 
   describe("hexToText", () => {
-    it("should convert hex to English text correctly", () => {
+    it("should convert hex to English text correctly in gen1", () => {
       const hex =
         "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
       const language = "en";
+      const gen = 1;
       const expectedText =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-      const result = hexToText(hex, language);
+      const result = hexToText(hex, language, gen);
       expect(result).toBe(expectedText);
     });
 
-    it("should convert hex to Japanese text correctly", () => {
+    it("should convert hex to English text correctly in gen2", () => {
+      const hex =
+        "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
+      const language = "en";
+      const gen = 2;
+      const expectedText =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+      const result = hexToText(hex, language, gen);
+      expect(result).toBe(expectedText);
+    });
+
+    it("should convert hex to Japanese text correctly in gen1", () => {
       const hex =
         "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
       const language = "ja";
+      const gen = 1;
       const expectedText =
         "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらリるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフへホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブべボパピプぺポ";
 
-      const result = hexToText(hex, language);
+      const result = hexToText(hex, language, gen);
+      expect(result).toBe(expectedText);
+    });
+
+    it("should convert hex to Japanese text correctly in gen2", () => {
+      const hex =
+        "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
+      const language = "ja";
+      const gen = 2;
+      const expectedText =
+        "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらリるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフへホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブべボパピプぺポ";
+
+      const result = hexToText(hex, language, gen);
       expect(result).toBe(expectedText);
     });
   });
