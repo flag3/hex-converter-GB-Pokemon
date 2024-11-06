@@ -238,6 +238,12 @@ const specialCharHexENGen2Map: { [key: string]: string } = {
   X: "97",
   Y: "98",
   Z: "99",
+  q: "B0",
+  r: "B1",
+  w: "B6",
+  x: "B7",
+  y: "B8",
+  z: "B9",
 };
 
 export const charHexENGen2Map: { [key: string]: string } = {};

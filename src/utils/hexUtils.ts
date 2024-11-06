@@ -32,6 +32,21 @@ import {
   hexCharJAGen2Map,
   charHexJAGen2Map,
 } from "./../constants/hexCharJAGen2Maps";
+import {
+  hexCharKOMap,
+  hexCharKO00Map,
+  hexCharKO01Map,
+  hexCharKO02Map,
+  hexCharKO03Map,
+  hexCharKO04Map,
+  hexCharKO05Map,
+  hexCharKO06Map,
+  hexCharKO07Map,
+  hexCharKO08Map,
+  hexCharKO09Map,
+  hexCharKO0AMap,
+  charHexKOMap,
+} from "./../constants/hexCharKOMaps";
 
 const getMap = (
   gen: number,
@@ -53,15 +68,15 @@ const charHexMap = (language: string, gen: number) => {
     case "en":
       return getMap(gen, charHexENGen1Map, charHexENGen2Map);
     case "fr":
-      return getMap(gen, charHexFRDEGen1Map, charHexFRDEGen2Map);
     case "de":
       return getMap(gen, charHexFRDEGen1Map, charHexFRDEGen2Map);
     case "it":
-      return getMap(gen, charHexITESGen1Map, charHexITESGen2Map);
     case "es":
       return getMap(gen, charHexITESGen1Map, charHexITESGen2Map);
     case "ja":
       return getMap(gen, charHexJAGen1Map, charHexJAGen2Map);
+    case "ko":
+      return charHexKOMap;
     default:
       return charHexENGen1Map;
   }
@@ -79,8 +94,37 @@ const hexCharMap = (language: string, gen: number) => {
       return getMap(gen, hexCharITESGen1Map, hexCharITESGen2Map);
     case "ja":
       return getMap(gen, hexCharJAGen1Map, hexCharJAGen2Map);
+    case "ko":
+      return hexCharKOMap;
     default:
       return hexCharENGen1Map;
+  }
+};
+
+const hexCharKO2byteMap = (hex: string, nextHex: string) => {
+  switch (hex) {
+    case "00":
+      return hexCharKO00Map[nextHex];
+    case "01":
+      return hexCharKO01Map[nextHex];
+    case "02":
+      return hexCharKO02Map[nextHex];
+    case "03":
+      return hexCharKO03Map[nextHex];
+    case "04":
+      return hexCharKO04Map[nextHex];
+    case "05":
+      return hexCharKO05Map[nextHex];
+    case "06":
+      return hexCharKO06Map[nextHex];
+    case "07":
+      return hexCharKO07Map[nextHex];
+    case "08":
+      return hexCharKO08Map[nextHex];
+    case "09":
+      return hexCharKO09Map[nextHex];
+    case "0A":
+      return hexCharKO0AMap[nextHex];
   }
 };
 
@@ -114,7 +158,22 @@ export const hexToText = (hex: string, language: string, gen: number) => {
       .replace(/\s/g, "")
       .toUpperCase()
       .match(/.{1,2}/g) || [];
-  return hexArray.map((hex) => hexCharMap(language, gen)[hex] || "").join("");
+  if (language === "ko") {
+    let result = "";
+    for (let i = 0; i < hexArray.length; i++) {
+      const hex = hexArray[i];
+      if (hex >= "00" && hex <= "0A" && i + 1 < hexArray.length) {
+        const nextHex = hexArray[i + 1];
+        result += hexCharKO2byteMap(hex, nextHex) || "";
+        i++;
+      } else {
+        result += hexCharMap(language, gen)[hex] || "";
+      }
+    }
+    return result;
+  } else {
+    return hexArray.map((hex) => hexCharMap(language, gen)[hex] || "").join("");
+  }
 };
 
 export const hexToProgram = (hex: string) => {
