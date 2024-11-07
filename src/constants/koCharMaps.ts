@@ -1,4 +1,29 @@
-export const hexCharKOMap: { [key: string]: string } = {
+const koCharHexSpecialMap: { [key: string]: string } = {
+  F: "85",
+  G: "86",
+  H: "87",
+  I: "88",
+  J: "89",
+  K: "8A",
+  L: "8B",
+  M: "8C",
+  N: "8D",
+  O: "8E",
+  P: "8F",
+  Q: "90",
+  R: "91",
+  S: "92",
+  T: "93",
+  U: "94",
+  V: "95",
+  Z: "99",
+  w: "B6",
+  x: "B7",
+  y: "B8",
+  z: "B9",
+};
+
+export const koHexCharMap: { [key: string]: string } = {
   "0C": "F",
   "0D": "G",
   "0E": "H",
@@ -198,7 +223,7 @@ export const hexCharKOMap: { [key: string]: string } = {
   FF: "9",
 };
 
-export const hexCharKO00Map: { [key: string]: string } = {
+const koHexChar2Byte00Map: { [key: string]: string } = {
   "00": "ㄱ",
   "01": "ㄴ",
   "02": "ㄷ",
@@ -266,7 +291,7 @@ export const hexCharKO00Map: { [key: string]: string } = {
   F9: "9",
 };
 
-export const hexCharKO01Map: { [key: string]: string } = {
+export const koHexChar2Byte01Map: { [key: string]: string } = {
   "01": "가",
   "02": "각",
   "03": "간",
@@ -504,7 +529,7 @@ export const hexCharKO01Map: { [key: string]: string } = {
   FF: "꽤",
 };
 
-export const hexCharKO02Map: { [key: string]: string } = {
+export const koHexChar2Byte02Map: { [key: string]: string } = {
   "00": "꽥",
   "01": "꽹",
   "02": "꾀",
@@ -741,7 +766,7 @@ export const hexCharKO02Map: { [key: string]: string } = {
   FE: "덥",
 };
 
-export const hexCharKO03Map: { [key: string]: string } = {
+export const koHexChar2Byte03Map: { [key: string]: string } = {
   "01": "덧",
   "02": "덩",
   "03": "덫",
@@ -979,7 +1004,7 @@ export const hexCharKO03Map: { [key: string]: string } = {
   FF: "록",
 };
 
-export const hexCharKO04Map: { [key: string]: string } = {
+export const koHexChar2Byte04Map: { [key: string]: string } = {
   "00": "론",
   "01": "롤",
   "02": "롬",
@@ -1217,7 +1242,7 @@ export const hexCharKO04Map: { [key: string]: string } = {
   FE: "벗",
 };
 
-export const hexCharKO05Map: { [key: string]: string } = {
+export const koHexChar2Byte05Map: { [key: string]: string } = {
   "01": "벙",
   "02": "벚",
   "03": "베",
@@ -1455,7 +1480,7 @@ export const hexCharKO05Map: { [key: string]: string } = {
   FF: "셴",
 };
 
-export const hexCharKO06Map: { [key: string]: string } = {
+export const koHexChar2Byte06Map: { [key: string]: string } = {
   "00": "셸",
   "01": "솅",
   "02": "소",
@@ -1696,7 +1721,7 @@ export const hexCharKO06Map: { [key: string]: string } = {
   FE: "엎",
 };
 
-export const hexCharKO07Map: { [key: string]: string } = {
+export const koHexChar2Byte07Map: { [key: string]: string } = {
   "01": "에",
   "02": "엑",
   "03": "엔",
@@ -1934,7 +1959,7 @@ export const hexCharKO07Map: { [key: string]: string } = {
   FF: "죕",
 };
 
-export const hexCharKO08Map: { [key: string]: string } = {
+export const koHexChar2Byte08Map: { [key: string]: string } = {
   "00": "죗",
   "01": "죙",
   "02": "죠",
@@ -2173,7 +2198,7 @@ export const hexCharKO08Map: { [key: string]: string } = {
   FE: "층",
 };
 
-export const hexCharKO09Map: { [key: string]: string } = {
+export const koHexChar2Byte09Map: { [key: string]: string } = {
   "01": "치",
   "02": "칙",
   "03": "친",
@@ -2411,7 +2436,7 @@ export const hexCharKO09Map: { [key: string]: string } = {
   FF: "팥",
 };
 
-export const hexCharKO0AMap: { [key: string]: string } = {
+export const koHexChar2Byte0AMap: { [key: string]: string } = {
   "00": "패",
   "01": "팩",
   "02": "팬",
@@ -2649,81 +2674,37 @@ export const hexCharKO0AMap: { [key: string]: string } = {
   FE: "힝",
 };
 
-const specialCharHexKOMap: { [key: string]: string } = {
-  F: "85",
-  G: "86",
-  H: "87",
-  I: "88",
-  J: "89",
-  K: "8A",
-  L: "8B",
-  M: "8C",
-  N: "8D",
-  O: "8E",
-  P: "8F",
-  Q: "90",
-  R: "91",
-  S: "92",
-  T: "93",
-  U: "94",
-  V: "95",
-  Z: "99",
-  w: "B6",
-  x: "B7",
-  y: "B8",
-  z: "B9",
+export const koHexChar2ByteMap: { [key: string]: { [key: string]: string } } = {
+  "00": koHexChar2Byte00Map,
+  "01": koHexChar2Byte01Map,
+  "02": koHexChar2Byte02Map,
+  "03": koHexChar2Byte03Map,
+  "04": koHexChar2Byte04Map,
+  "05": koHexChar2Byte05Map,
+  "06": koHexChar2Byte06Map,
+  "07": koHexChar2Byte07Map,
+  "08": koHexChar2Byte08Map,
+  "09": koHexChar2Byte09Map,
+  "0A": koHexChar2Byte0AMap,
 };
 
-export const charHexKOMap: { [key: string]: string } = {};
-
-for (const key in hexCharKO0AMap) {
-  charHexKOMap[hexCharKO0AMap[key]] = `0A ${key}`;
-}
-
-for (const key in hexCharKO09Map) {
-  charHexKOMap[hexCharKO09Map[key]] = `09 ${key}`;
-}
-
-for (const key in hexCharKO08Map) {
-  charHexKOMap[hexCharKO08Map[key]] = `08 ${key}`;
-}
-
-for (const key in hexCharKO07Map) {
-  charHexKOMap[hexCharKO07Map[key]] = `07 ${key}`;
-}
-
-for (const key in hexCharKO06Map) {
-  charHexKOMap[hexCharKO06Map[key]] = `06 ${key}`;
-}
-
-for (const key in hexCharKO05Map) {
-  charHexKOMap[hexCharKO05Map[key]] = `05 ${key}`;
-}
-
-for (const key in hexCharKO04Map) {
-  charHexKOMap[hexCharKO04Map[key]] = `04 ${key}`;
-}
-
-for (const key in hexCharKO03Map) {
-  charHexKOMap[hexCharKO03Map[key]] = `03 ${key}`;
-}
-
-for (const key in hexCharKO02Map) {
-  charHexKOMap[hexCharKO02Map[key]] = `02 ${key}`;
-}
-
-for (const key in hexCharKO01Map) {
-  charHexKOMap[hexCharKO01Map[key]] = `01 ${key}`;
-}
-
-for (const key in hexCharKO00Map) {
-  charHexKOMap[hexCharKO00Map[key]] = `00 ${key}`;
-}
-
-for (const key in hexCharKOMap) {
-  charHexKOMap[hexCharKOMap[key]] = key;
-}
-
-for (const key in specialCharHexKOMap) {
-  charHexKOMap[key] = specialCharHexKOMap[key];
-}
+export const koCharHexMap: { [key: string]: string } = {
+  ...Object.entries(koHexChar2ByteMap).reduce(
+    (acc, [firstByte, map]) => ({
+      ...acc,
+      ...Object.entries(map).reduce(
+        (innerAcc, [secondByte, char]) => ({
+          ...innerAcc,
+          [char]: `${firstByte} ${secondByte}`,
+        }),
+        {},
+      ),
+    }),
+    {},
+  ),
+  ...Object.entries(koHexCharMap).reduce(
+    (acc, [hex, char]) => ({ ...acc, [char]: hex }),
+    {},
+  ),
+  ...koCharHexSpecialMap,
+};
