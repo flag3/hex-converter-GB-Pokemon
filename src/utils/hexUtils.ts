@@ -76,28 +76,28 @@ const languageMaps: LanguageMap = {
 
 const getMap = (
   language: string,
-  gen: number,
+  gen: string,
   type: "hex" | "char",
 ): CharacterMap => {
   const defaultMap = languageMaps.en.gen1[type];
   const languageMap = languageMaps[language];
   if (!languageMap) return defaultMap;
 
-  return gen === 2 ? languageMap.gen2[type] : languageMap.gen1[type];
+  return gen === "2" ? languageMap.gen2[type] : languageMap.gen1[type];
 };
 
-const charHexMap = (language: string, gen: number): CharacterMap => {
+const charHexMap = (language: string, gen: string): CharacterMap => {
   return getMap(language, gen, "char");
 };
 
-const hexCharMap = (language: string, gen: number): CharacterMap => {
+const hexCharMap = (language: string, gen: string): CharacterMap => {
   return getMap(language, gen, "hex");
 };
 
 export const textToHex = (
   text: string,
   language: string,
-  gen: number,
+  gen: string,
 ): string => {
   const result = [];
   const map = charHexMap(language, gen);
@@ -121,7 +121,7 @@ export const textToHex = (
 export const hexToText = (
   hex: string,
   language: string,
-  gen: number,
+  gen: string,
 ): string => {
   const hexArray =
     hex

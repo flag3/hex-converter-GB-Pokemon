@@ -6,7 +6,7 @@ describe("hexUtils", () => {
     it("should convert English text to hex correctly in gen1", () => {
       const text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       const language = "en";
-      const gen = 1;
+      const gen = "1";
       const expectedHex =
         "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
 
@@ -17,7 +17,7 @@ describe("hexUtils", () => {
     it("should convert English text to hex correctly in gen2", () => {
       const text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       const language = "en";
-      const gen = 2;
+      const gen = "2";
       const expectedHex =
         "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
 
@@ -28,7 +28,7 @@ describe("hexUtils", () => {
     it("should convert French text to hex correctly in gen1", () => {
       const text = "éèêëàâçùûüîïôÜ";
       const language = "fr";
-      const gen = 1;
+      const gen = "1";
       const expectedHex = "BC BB CB C6 BA C8 BF BD CA C5 CC C7 C9 C2";
 
       const result = textToHex(text, language, gen);
@@ -38,7 +38,7 @@ describe("hexUtils", () => {
     it("should convert German text to hex correctly in gen2", () => {
       const text = "äöüÄÖÜß";
       const language = "de";
-      const gen = 2;
+      const gen = "2";
       const expectedHex = "C3 C4 C5 C0 C1 C2 BE";
 
       const result = textToHex(text, language, gen);
@@ -48,7 +48,7 @@ describe("hexUtils", () => {
     it("should convert Italian text to hex correctly in gen1", () => {
       const text = "àèéìíñòóùú";
       const language = "it";
-      const gen = 1;
+      const gen = "1";
       const expectedHex = "BA BB BC D0 D1 D2 D3 D4 BD D5";
 
       const result = textToHex(text, language, gen);
@@ -58,7 +58,7 @@ describe("hexUtils", () => {
     it("should convert Spanish text to hex correctly in gen2", () => {
       const text = "áéíóúñ¿¡";
       const language = "es";
-      const gen = 2;
+      const gen = "2";
       const expectedHex = "CF BC D1 D4 D5 D2 E4 E5";
 
       const result = textToHex(text, language, gen);
@@ -69,7 +69,7 @@ describe("hexUtils", () => {
       const text =
         "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ";
       const language = "ja";
-      const gen = 1;
+      const gen = "1";
       const expectedHex =
         "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
 
@@ -81,7 +81,7 @@ describe("hexUtils", () => {
       const text =
         "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ";
       const language = "ja";
-      const gen = 2;
+      const gen = "2";
       const expectedHex =
         "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
 
@@ -92,7 +92,7 @@ describe("hexUtils", () => {
     it("should convert Japanese characters that normally do not take a voiced sound mark to hex", () => {
       const text = "あ゙い゙ゔえ゙お゙";
       const language = "ja";
-      const gen = 1;
+      const gen = "1";
       const expectedHex = "21 22 23 24 25";
 
       const result = textToHex(text, language, gen);
@@ -102,7 +102,7 @@ describe("hexUtils", () => {
     it("should convert Korean text to hex correctly", () => {
       const text = "가나다라마바사아자차카타파하";
       const language = "ko";
-      const gen = 2;
+      const gen = "2";
       const expectedHex =
         "01 01 02 3A 02 D9 03 C3 04 46 04 D9 05 B7 06 C6 07 AA 08 97 09 0B 09 88 09 F4 0A 6F";
 
@@ -116,7 +116,7 @@ describe("hexUtils", () => {
       const hex =
         "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
       const language = "en";
-      const gen = 1;
+      const gen = "1";
       const expectedText =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -128,7 +128,7 @@ describe("hexUtils", () => {
       const hex =
         "80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF B0 B1 B2 B3 B4 B5 B6 B7 B8 B9";
       const language = "en";
-      const gen = 2;
+      const gen = "2";
       const expectedText =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -139,7 +139,7 @@ describe("hexUtils", () => {
     it("should convert hex to French text correctly in gen1", () => {
       const hex = "BC BB CB C6 BA C8 BF BD CA C5 CC C7 C9 C2";
       const language = "fr";
-      const gen = 1;
+      const gen = "1";
       const expectedText = "éèêëàâçùûüîïôÜ";
 
       const result = hexToText(hex, language, gen);
@@ -149,7 +149,7 @@ describe("hexUtils", () => {
     it("should convert hex to German text correctly in gen2", () => {
       const hex = "C3 C4 C5 C0 C1 C2 BE";
       const language = "de";
-      const gen = 2;
+      const gen = "2";
       const expectedText = "äöüÄÖÜß";
 
       const result = hexToText(hex, language, gen);
@@ -159,7 +159,7 @@ describe("hexUtils", () => {
     it("should convert hex to Italian text correctly in gen1", () => {
       const hex = "BA BB BC D0 D1 D2 D3 D4 BD D5";
       const language = "it";
-      const gen = 1;
+      const gen = "1";
       const expectedText = "àèéìíñòóùú";
 
       const result = hexToText(hex, language, gen);
@@ -169,7 +169,7 @@ describe("hexUtils", () => {
     it("should convert hex to Spanish text correctly in gen2", () => {
       const hex = "CF BC D1 D4 D5 D2 E4 E5";
       const language = "es";
-      const gen = 2;
+      const gen = "2";
       const expectedText = "áéíóúñ¿¡";
 
       const result = hexToText(hex, language, gen);
@@ -180,7 +180,7 @@ describe("hexUtils", () => {
       const hex =
         "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
       const language = "ja";
-      const gen = 1;
+      const gen = "1";
       const expectedText =
         "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらリるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフへホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブべボパピプぺポ";
 
@@ -192,7 +192,7 @@ describe("hexUtils", () => {
       const hex =
         "B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 3A 3B 3C 3D 3E 44 45 46 47 48 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 96 97 98 99 9A 9B CD 9C 9D 9E 9F A0 A1 A2 A3 A4 A5 D8 A6 A7 A8 A9 AA AB 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 19 1A 1B 3D 1C 40 41 42 47 43";
       const language = "ja";
-      const gen = 2;
+      const gen = "2";
       const expectedText =
         "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらリるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフへホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブべボパピプぺポ";
 
@@ -203,7 +203,7 @@ describe("hexUtils", () => {
     it("should convert hex to Japanese characters that normally do not take a voiced sound mark", () => {
       const hex = "21 22 23 24 25";
       const language = "ja";
-      const gen = 1;
+      const gen = "1";
       const expectedText = "あ゙い゙ゔえ゙お゙";
 
       const result = hexToText(hex, language, gen);
@@ -214,7 +214,7 @@ describe("hexUtils", () => {
       const hex =
         "01 01 02 3A 02 D9 03 C3 04 46 04 D9 05 B7 06 C6 07 AA 08 97 09 0B 09 88 09 F4 0A 6F";
       const language = "ko";
-      const gen = 1;
+      const gen = "1";
       const expectedText = "가나다라마바사아자차카타파하";
 
       const result = hexToText(hex, language, gen);

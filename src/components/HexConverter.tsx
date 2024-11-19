@@ -13,22 +13,10 @@ import "./../App.css";
 
 export default function HexConverter() {
   const { t, i18n } = useTranslation();
-  const [gen, setGen] = useState(1);
+  const [gen, setGen] = useState("1");
   const [text, setText] = useState("");
   const [hex, setHex] = useState("");
   const [program, setProgram] = useState("");
-
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const selectedLanguage = event.target.value;
-    i18n.changeLanguage(selectedLanguage);
-  };
-
-  const handleGenChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newGen = parseInt(event.target.value);
-    setGen(newGen);
-  };
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.target.value;
@@ -78,17 +66,17 @@ export default function HexConverter() {
           { value: "ja", label: "日本語" },
           { value: "ko", label: "한국어" },
         ]}
-        onChange={handleLanguageChange}
+        onChange={(event) => i18n.changeLanguage(event.target.value)}
       />
       {i18n.language !== "ko" && (
         <Selector
           label={t("gen")}
-          value={gen.toString()}
+          value={gen}
           options={[
             { value: "1", label: "1" },
             { value: "2", label: "2" },
           ]}
-          onChange={handleGenChange}
+          onChange={(event) => setGen(event.target.value)}
         />
       )}
       <div className="input-container">
