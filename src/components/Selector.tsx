@@ -4,7 +4,13 @@ type SelectorProps = {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: { value: string; label: string }[];
 };
-const Selector = ({ label, value, onChange, options }: SelectorProps) => {
+
+export default function Selector({
+  label,
+  value,
+  onChange,
+  options,
+}: SelectorProps) {
   return (
     <div>
       {label}
@@ -17,5 +23,4 @@ const Selector = ({ label, value, onChange, options }: SelectorProps) => {
       </select>
     </div>
   );
-};
-export default Selector;
+}

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 interface InputAreaProps {
   label: string;
@@ -6,13 +6,11 @@ interface InputAreaProps {
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const InputArea: React.FC<InputAreaProps> = ({ label, value, onChange }) => {
+export default function InputArea({ label, value, onChange }: InputAreaProps) {
   return (
     <div>
       <label>{label}</label>
       <textarea value={value} onChange={onChange} rows={20} cols={48} />
     </div>
   );
-};
-
-export default InputArea;
+}

@@ -1,5 +1,4 @@
 import { useState, ChangeEvent } from "react";
-import "./../App.css";
 import { useTranslation } from "react-i18next";
 import InputArea from "./InputArea";
 import ResetButton from "./ResetButton";
@@ -10,6 +9,7 @@ import {
   hexToProgram,
   programToHex,
 } from "./../utils/hexUtils";
+import "./../App.css";
 
 export default function HexConverter() {
   const { t, i18n } = useTranslation();
