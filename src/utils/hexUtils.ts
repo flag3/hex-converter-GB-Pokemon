@@ -131,18 +131,18 @@ export const hexToText = (
   const map = hexCharMap(language, gen);
 
   if (language === "ko") {
-    let result = "";
+    const result = [];
     for (let i = 0; i < hexArray.length; i++) {
       const hex = hexArray[i];
       if (hex >= "00" && hex <= "0A" && i + 1 < hexArray.length) {
         const nextHex = hexArray[i + 1];
-        result += koHexChar2ByteMap[hex]?.[nextHex] || "";
+        result.push(koHexChar2ByteMap[hex]?.[nextHex]);
         i++;
       } else {
-        result += map[hex] || "";
+        result.push(map[hex]);
       }
     }
-    return result;
+    return result.join("");
   }
 
   return hexArray.map((hex) => map[hex] || "").join("");
@@ -174,7 +174,7 @@ export const hexToProgram = (hex: string): string => {
       .replace(/\s/g, "")
       .toUpperCase()
       .match(/.{1,2}/g) || [];
-  let program = "";
+  const result = [];
 
   for (let i = 0; i < hexArray.length; i++) {
     let instruction: string;
@@ -192,10 +192,10 @@ export const hexToProgram = (hex: string): string => {
     instruction = processOperands(instruction, operands, operandCount);
     i += operandCount;
 
-    program += i < hexArray.length - 1 ? `${instruction}\n` : instruction;
+    result.push(instruction);
   }
 
-  return program;
+  return result.join("\n");
 };
 
 const patternToRegex = (pattern: string): RegExp => {

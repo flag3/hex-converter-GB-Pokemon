@@ -10,7 +10,7 @@ export default function InputArea({ label, value, onChange }: InputAreaProps) {
   return (
     <div>
       <label>{label}</label>
-      <textarea value={value} onChange={onChange} rows={20} cols={48} />
+      <textarea value={value} onChange={onChange} rows={20} cols={44} />
     </div>
   );
 }
