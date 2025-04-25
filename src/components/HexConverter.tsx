@@ -1,8 +1,8 @@
 import { useState, ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
-import InputArea from "./InputArea";
-import ResetButton from "./ResetButton";
-import Selector from "./Selector";
+import { InputArea } from "./InputArea";
+import { ResetButton } from "./ResetButton";
+import { Selector } from "./Selector";
 import {
   textToHex,
   hexToText,
@@ -11,7 +11,7 @@ import {
 } from "./../utils/hexUtils";
 import "./../App.css";
 
-export default function HexConverter() {
+export const HexConverter = () => {
   const { t, i18n } = useTranslation();
   const [gen, setGen] = useState("1");
   const [text, setText] = useState("");

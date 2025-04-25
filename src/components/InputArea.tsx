@@ -6,7 +6,7 @@ interface InputAreaProps {
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export default function InputArea({ label, value, onChange }: InputAreaProps) {
+export const InputArea = ({ label, value, onChange }: InputAreaProps) => {
   return (
     <div>
       <label>{label}</label>
