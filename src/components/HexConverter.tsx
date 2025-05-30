@@ -1,54 +1,36 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { InputArea } from "./InputArea";
 import { ResetButton } from "./ResetButton";
 import { Selector } from "./Selector";
-import {
-  textToHex,
-  hexToText,
-  hexToProgram,
-  programToHex,
-} from "./../utils/hexUtils";
+import { useHexConverter } from "./../hooks/useHexConverter";
+import type { Generation, SelectorOption } from "./../types";
 import "./../App.css";
 
 export const HexConverter = () => {
   const { t, i18n } = useTranslation();
-  const [gen, setGen] = useState("1");
-  const [text, setText] = useState("");
-  const [hex, setHex] = useState("");
-  const [program, setProgram] = useState("");
+  const {
+    gen,
+    setGen,
+    text,
+    hex,
+    program,
+    updateFromText,
+    updateFromHex,
+    updateFromProgram,
+    reset,
+  } = useHexConverter();
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const newText = event.target.value;
-    const newHex = textToHex(newText, i18n.language, gen);
-    const newProgram = hexToProgram(newHex);
-    setText(newText);
-    setHex(newHex);
-    setProgram(newProgram);
+    updateFromText(event.target.value);
   };
 
   const handleHexChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const newHex = event.target.value.replace(/[^0-9A-Fa-f\s]/g, "");
-    const newText = hexToText(newHex, i18n.language, gen);
-    const newProgram = hexToProgram(newHex);
-    setHex(newHex);
-    setText(newText);
-    setProgram(newProgram);
+    updateFromHex(event.target.value);
   };
 
   const handleProgramChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const newProgram = event.target.value;
-    const newHex = programToHex(newProgram);
-    const newText = hexToText(newHex, i18n.language, gen);
-    setProgram(newProgram);
-    setHex(newHex);
-    setText(newText);
-  };
-
-  const handleReset = () => {
-    setText("");
-    setHex("");
-    setProgram("");
+    updateFromProgram(event.target.value);
   };
 
   return (
@@ -57,26 +39,15 @@ export const HexConverter = () => {
       <Selector
         label={t("language")}
         value={i18n.language}
-        options={[
-          { value: "en", label: "English" },
-          { value: "fr", label: "Français" },
-          { value: "de", label: "Deutsch" },
-          { value: "it", label: "Italiano" },
-          { value: "es", label: "Español" },
-          { value: "ja", label: "日本語" },
-          { value: "ko", label: "한국어" },
-        ]}
+        options={languageOptions}
         onChange={(event) => i18n.changeLanguage(event.target.value)}
       />
       {i18n.language !== "ko" && (
         <Selector
           label={t("gen")}
           value={gen}
-          options={[
-            { value: "1", label: "1" },
-            { value: "2", label: "2" },
-          ]}
-          onChange={(event) => setGen(event.target.value)}
+          options={generationOptions}
+          onChange={(event) => setGen(event.target.value as Generation)}
         />
       )}
       <div className="input-container">
@@ -88,7 +59,22 @@ export const HexConverter = () => {
           onChange={handleProgramChange}
         />
       </div>
-      <ResetButton onClick={handleReset} />
+      <ResetButton onClick={reset} />
     </div>
   );
 }
+
+const languageOptions: SelectorOption[] = [
+  { value: "en", label: "English" },
+  { value: "fr", label: "Français" },
+  { value: "de", label: "Deutsch" },
+  { value: "it", label: "Italiano" },
+  { value: "es", label: "Español" },
+  { value: "ja", label: "日本語" },
+  { value: "ko", label: "한국어" },
+];
+
+const generationOptions: SelectorOption[] = [
+  { value: "1", label: "1" },
+  { value: "2", label: "2" },
+];

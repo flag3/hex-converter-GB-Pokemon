@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, memo } from "react";
 
 interface InputAreaProps {
   label: string;
@@ -6,11 +6,11 @@ interface InputAreaProps {
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export const InputArea = ({ label, value, onChange }: InputAreaProps) => {
+export const InputArea = memo(({ label, value, onChange }: InputAreaProps) => {
   return (
     <div>
       <label>{label}</label>
       <textarea value={value} onChange={onChange} rows={20} cols={44} />
     </div>
   );
-}
+});

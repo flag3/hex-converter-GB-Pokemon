@@ -1,11 +1,14 @@
+import { memo } from "react";
+import type { SelectorOption } from "./../types";
+
 type SelectorProps = {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: { value: string; label: string }[];
+  options: SelectorOption[];
 };
 
-export const Selector = ({
+export const Selector = memo(({
   label,
   value,
   onChange,
@@ -23,4 +26,4 @@ export const Selector = ({
       </select>
     </div>
   );
-}
+});

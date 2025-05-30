@@ -1,83 +1,13 @@
-import {
-  instructionMap,
-  instructionCBMap,
-} from "./../constants/instructionMaps";
-import {
-  enGen1HexCharMap,
-  enGen1CharHexMap,
-  enGen2HexCharMap,
-  enGen2CharHexMap,
-} from "./../constants/enCharMaps";
-import {
-  frdeGen1HexCharMap,
-  frdeGen1CharHexMap,
-  frdeGen2HexCharMap,
-  frdeGen2CharHexMap,
-} from "./../constants/frdeCharMaps";
-import {
-  itesGen1HexCharMap,
-  itesGen1CharHexMap,
-  itesGen2HexCharMap,
-  itesGen2CharHexMap,
-} from "./../constants/itesCharMaps";
-import {
-  jaGen1HexCharMap,
-  jaGen1CharHexMap,
-  jaGen2HexCharMap,
-  jaGen2CharHexMap,
-} from "./../constants/jaCharMaps";
-import {
-  koHexCharMap,
-  koCharHexMap,
-  koHexChar2ByteMap,
-} from "./../constants/koCharMaps";
-
-interface CharacterMap {
-  [key: string]: string;
-}
-
-interface LanguageMap {
-  [language: string]: {
-    gen1: { [key: string]: CharacterMap };
-    gen2: { [key: string]: CharacterMap };
-  };
-}
-
-const languageMaps: LanguageMap = {
-  en: {
-    gen1: { hex: enGen1HexCharMap, char: enGen1CharHexMap },
-    gen2: { hex: enGen2HexCharMap, char: enGen2CharHexMap },
-  },
-  fr: {
-    gen1: { hex: frdeGen1HexCharMap, char: frdeGen1CharHexMap },
-    gen2: { hex: frdeGen2HexCharMap, char: frdeGen2CharHexMap },
-  },
-  de: {
-    gen1: { hex: frdeGen1HexCharMap, char: frdeGen1CharHexMap },
-    gen2: { hex: frdeGen2HexCharMap, char: frdeGen2CharHexMap },
-  },
-  it: {
-    gen1: { hex: itesGen1HexCharMap, char: itesGen1CharHexMap },
-    gen2: { hex: itesGen2HexCharMap, char: itesGen2CharHexMap },
-  },
-  es: {
-    gen1: { hex: itesGen1HexCharMap, char: itesGen1CharHexMap },
-    gen2: { hex: itesGen2HexCharMap, char: itesGen2CharHexMap },
-  },
-  ja: {
-    gen1: { hex: jaGen1HexCharMap, char: jaGen1CharHexMap },
-    gen2: { hex: jaGen2HexCharMap, char: jaGen2CharHexMap },
-  },
-  ko: {
-    gen1: { hex: koHexCharMap, char: koCharHexMap },
-    gen2: { hex: koHexCharMap, char: koCharHexMap },
-  },
-};
+import { instructionMap, instructionCBMap } from "./../constants/instructionMaps";
+import { languageMaps, koHexChar2ByteMap } from "./../constants/languageMaps";
+import { normalizeHex } from "./validationUtils";
+import { getMemoizedInstructionMaps } from "./memoization";
+import type { CharacterMap, Language, Generation, MapType, InstructionInfo } from "./../types";
 
 const getMap = (
-  language: string,
-  gen: string,
-  type: "hex" | "char",
+  language: Language,
+  gen: Generation,
+  type: MapType,
 ): CharacterMap => {
   const defaultMap = languageMaps.en.gen1[type];
   const languageMap = languageMaps[language];
@@ -86,18 +16,18 @@ const getMap = (
   return gen === "2" ? languageMap.gen2[type] : languageMap.gen1[type];
 };
 
-const charHexMap = (language: string, gen: string): CharacterMap => {
+const charHexMap = (language: Language, gen: Generation): CharacterMap => {
   return getMap(language, gen, "char");
 };
 
-const hexCharMap = (language: string, gen: string): CharacterMap => {
+const hexCharMap = (language: Language, gen: Generation): CharacterMap => {
   return getMap(language, gen, "hex");
 };
 
 export const textToHex = (
   text: string,
-  language: string,
-  gen: string,
+  language: Language,
+  gen: Generation,
 ): string => {
   const result = [];
   const map = charHexMap(language, gen);
@@ -120,14 +50,10 @@ export const textToHex = (
 
 export const hexToText = (
   hex: string,
-  language: string,
-  gen: string,
+  language: Language,
+  gen: Generation,
 ): string => {
-  const hexArray =
-    hex
-      .replace(/\s/g, "")
-      .toUpperCase()
-      .match(/.{1,2}/g) || [];
+  const hexArray = normalizeHex(hex);
   const map = hexCharMap(language, gen);
 
   if (language === "ko") {
@@ -169,11 +95,7 @@ const processOperands = (
 };
 
 export const hexToProgram = (hex: string): string => {
-  const hexArray =
-    hex
-      .replace(/\s/g, "")
-      .toUpperCase()
-      .match(/.{1,2}/g) || [];
+  const hexArray = normalizeHex(hex);
   const result = [];
 
   for (let i = 0; i < hexArray.length; i++) {
@@ -222,10 +144,6 @@ const patternToRegex = (pattern: string): RegExp => {
   return new RegExp(`^${regexStr}$`);
 };
 
-interface InstructionInfo {
-  opcode: string;
-  operandPattern: string;
-}
 
 const parseInstruction = (
   instructionPart: string,
@@ -259,48 +177,10 @@ const parseInstruction = (
   return null;
 };
 
-const buildInstructionMaps = () => {
-  const instructionInfoMap: { [instruction: string]: InstructionInfo[] } = {};
-  const cbInstructionInfoMap: { [instruction: string]: InstructionInfo[] } = {};
-
-  Object.entries(instructionMap).forEach(([hex, template]) => {
-    const firstSpaceIndex = template.indexOf(" ");
-    const instruction =
-      firstSpaceIndex === -1 ? template : template.slice(0, firstSpaceIndex);
-    const operandPattern =
-      firstSpaceIndex === -1 ? "" : template.slice(firstSpaceIndex + 1).trim();
-
-    if (!instructionInfoMap[instruction]) {
-      instructionInfoMap[instruction] = [];
-    }
-
-    instructionInfoMap[instruction].push({
-      opcode: hex,
-      operandPattern,
-    });
-  });
-
-  Object.entries(instructionCBMap).forEach(([hex, template]) => {
-    const normalizedTemplate = template.replace(/\s+/g, " ");
-    if (!cbInstructionInfoMap[normalizedTemplate]) {
-      cbInstructionInfoMap[normalizedTemplate] = [];
-    }
-
-    cbInstructionInfoMap[normalizedTemplate].push({
-      opcode: hex,
-      operandPattern: "",
-    });
-  });
-
-  return {
-    instructionInfoMap: instructionInfoMap,
-    cbInstructionInfoMap: cbInstructionInfoMap,
-  };
-};
 
 export const programToHex = (program: string): string => {
   const lines = program.split("\n");
-  const { instructionInfoMap, cbInstructionInfoMap } = buildInstructionMaps();
+  const { instructionInfoMap, cbInstructionInfoMap } = getMemoizedInstructionMaps();
 
   return lines
     .map((line) => {
