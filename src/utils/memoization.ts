@@ -13,10 +13,8 @@ export const getMemoizedInstructionMaps = (): InstructionMaps => {
 
   Object.entries(instructionMap).forEach(([hex, template]) => {
     const firstSpaceIndex = template.indexOf(" ");
-    const instruction =
-      firstSpaceIndex === -1 ? template : template.slice(0, firstSpaceIndex);
-    const operandPattern =
-      firstSpaceIndex === -1 ? "" : template.slice(firstSpaceIndex + 1).trim();
+    const instruction = firstSpaceIndex === -1 ? template : template.slice(0, firstSpaceIndex);
+    const operandPattern = firstSpaceIndex === -1 ? "" : template.slice(firstSpaceIndex + 1).trim();
 
     if (!instructionInfoMap[instruction]) {
       instructionInfoMap[instruction] = [];

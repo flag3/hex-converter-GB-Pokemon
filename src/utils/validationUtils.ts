@@ -7,8 +7,10 @@ export const isValidHex = (hex: string): boolean => {
 };
 
 export const normalizeHex = (hex: string): string[] => {
-  return hex
-    .replace(/\s/g, "")
-    .toUpperCase()
-    .match(/.{1,2}/g) || [];
+  return (
+    hex
+      .replace(/\s/g, "")
+      .toUpperCase()
+      .match(/.{1,2}/g) || []
+  );
 };

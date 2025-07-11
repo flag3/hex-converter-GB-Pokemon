@@ -1,5 +1,5 @@
-export type Language = 'en' | 'fr' | 'de' | 'it' | 'es' | 'ja' | 'ko';
-export type Generation = '1' | '2';
+export type Language = "en" | "fr" | "de" | "it" | "es" | "ja" | "ko";
+export type Generation = "1" | "2";
 
 export interface CharacterMap {
   [key: string]: string;
@@ -32,4 +32,4 @@ export interface SelectorOption {
   label: string;
 }
 
-export type MapType = 'hex' | 'char';
+export type MapType = "hex" | "char";

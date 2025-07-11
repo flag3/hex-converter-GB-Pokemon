@@ -1,5 +1,5 @@
-import { memo } from "react";
 import type { SelectorOption } from "./../types";
+import { memo } from "react";
 
 type SelectorProps = {
   label: string;
@@ -8,12 +8,7 @@ type SelectorProps = {
   options: SelectorOption[];
 };
 
-export const Selector = memo(({
-  label,
-  value,
-  onChange,
-  options,
-}: SelectorProps) => {
+export const Selector = memo(({ label, value, onChange, options }: SelectorProps) => {
   return (
     <div>
       {label}
