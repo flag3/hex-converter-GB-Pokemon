@@ -9,8 +9,17 @@ import { useTranslation } from "react-i18next";
 
 export const HexConverter = () => {
   const { t, i18n } = useTranslation();
-  const { gen, setGen, text, hex, program, updateFromText, updateFromHex, updateFromProgram, reset } =
-    useHexConverter();
+  const {
+    gen,
+    setGen,
+    text,
+    hex,
+    program,
+    updateFromText,
+    updateFromHex,
+    updateFromProgram,
+    reset,
+  } = useHexConverter();
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     updateFromText(event.target.value);
@@ -44,7 +53,11 @@ export const HexConverter = () => {
       <div className="input-container">
         <InputArea label={t("text")} value={text} onChange={handleTextChange} />
         <InputArea label={t("hex")} value={hex} onChange={handleHexChange} />
-        <InputArea label={t("program")} value={program} onChange={handleProgramChange} />
+        <InputArea
+          label={t("program")}
+          value={program}
+          onChange={handleProgramChange}
+        />
       </div>
       <ResetButton onClick={reset} />
     </div>

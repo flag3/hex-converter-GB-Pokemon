@@ -1,5 +1,10 @@
 import type { Language, Generation } from "./../types";
-import { textToHex, hexToText, hexToProgram, programToHex } from "./../utils/hexUtils";
+import {
+  textToHex,
+  hexToText,
+  hexToProgram,
+  programToHex,
+} from "./../utils/hexUtils";
 import { sanitizeHex } from "./../utils/validationUtils";
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";

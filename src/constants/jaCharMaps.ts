@@ -292,7 +292,10 @@ export const jaGen1HexCharMap: { [key: string]: string } = {
 };
 
 export const jaGen1CharHexMap: { [key: string]: string } = {
-  ...Object.entries(jaGen1HexCharMap).reduce((acc, [hex, char]) => ({ ...acc, [char]: hex }), {}),
+  ...Object.entries(jaGen1HexCharMap).reduce(
+    (acc, [hex, char]) => ({ ...acc, [char]: hex }),
+    {},
+  ),
   ...jaCharHexSpecialMap,
 };
 
@@ -556,6 +559,9 @@ export const jaGen2HexCharMap: { [key: string]: string } = {
 };
 
 export const jaGen2CharHexMap: { [key: string]: string } = {
-  ...Object.entries(jaGen2HexCharMap).reduce((acc, [hex, char]) => ({ ...acc, [char]: hex }), {}),
+  ...Object.entries(jaGen2HexCharMap).reduce(
+    (acc, [hex, char]) => ({ ...acc, [char]: hex }),
+    {},
+  ),
   ...jaCharHexSpecialMap,
 };

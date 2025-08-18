@@ -171,7 +171,10 @@ export const frdeGen1HexCharMap: { [key: string]: string } = {
 };
 
 export const frdeGen1CharHexMap: { [key: string]: string } = {
-  ...Object.entries(frdeGen1HexCharMap).reduce((acc, [hex, char]) => ({ ...acc, [char]: hex }), {}),
+  ...Object.entries(frdeGen1HexCharMap).reduce(
+    (acc, [hex, char]) => ({ ...acc, [char]: hex }),
+    {},
+  ),
   ...frdeCharHexSpecialMap,
 };
 
@@ -330,6 +333,9 @@ export const frdeGen2HexCharMap: { [key: string]: string } = {
 };
 
 export const frdeGen2CharHexMap: { [key: string]: string } = {
-  ...Object.entries(frdeGen2HexCharMap).reduce((acc, [hex, char]) => ({ ...acc, [char]: hex }), {}),
+  ...Object.entries(frdeGen2HexCharMap).reduce(
+    (acc, [hex, char]) => ({ ...acc, [char]: hex }),
+    {},
+  ),
   ...frdeCharHexSpecialMap,
 };

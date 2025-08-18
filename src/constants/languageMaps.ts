@@ -1,8 +1,28 @@
 import type { LanguageMap } from "./../types";
-import { enGen1HexCharMap, enGen1CharHexMap, enGen2HexCharMap, enGen2CharHexMap } from "./enCharMaps";
-import { frdeGen1HexCharMap, frdeGen1CharHexMap, frdeGen2HexCharMap, frdeGen2CharHexMap } from "./frdeCharMaps";
-import { itesGen1HexCharMap, itesGen1CharHexMap, itesGen2HexCharMap, itesGen2CharHexMap } from "./itesCharMaps";
-import { jaGen1HexCharMap, jaGen1CharHexMap, jaGen2HexCharMap, jaGen2CharHexMap } from "./jaCharMaps";
+import {
+  enGen1HexCharMap,
+  enGen1CharHexMap,
+  enGen2HexCharMap,
+  enGen2CharHexMap,
+} from "./enCharMaps";
+import {
+  frdeGen1HexCharMap,
+  frdeGen1CharHexMap,
+  frdeGen2HexCharMap,
+  frdeGen2CharHexMap,
+} from "./frdeCharMaps";
+import {
+  itesGen1HexCharMap,
+  itesGen1CharHexMap,
+  itesGen2HexCharMap,
+  itesGen2CharHexMap,
+} from "./itesCharMaps";
+import {
+  jaGen1HexCharMap,
+  jaGen1CharHexMap,
+  jaGen2HexCharMap,
+  jaGen2CharHexMap,
+} from "./jaCharMaps";
 import { koHexCharMap, koCharHexMap } from "./koCharMaps";
 
 export const languageMaps: LanguageMap = {
